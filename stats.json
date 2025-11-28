@@ -11007,16 +11007,16 @@
       "bytes": 33,
       "imports": []
     },
-    "src/app/components/toasts/info-toast-container/info-toast-container.component.sass": {
-      "bytes": 406,
-      "imports": []
-    },
-    "src/app/components/toggler/toggler.component.sass": {
-      "bytes": 260,
-      "imports": []
-    },
     "src/app/pages/third-party/third-party.component.sass": {
       "bytes": 84,
+      "imports": []
+    },
+    "src/app/pages/imprint/imprint.component.sass": {
+      "bytes": 44,
+      "imports": []
+    },
+    "src/app/pages/home/home.component.sass": {
+      "bytes": 771,
       "imports": []
     },
     "src/app/pages/about/about.component.sass": {
@@ -11027,16 +11027,12 @@
       "bytes": 44,
       "imports": []
     },
-    "src/app/pages/imprint/imprint.component.sass": {
-      "bytes": 44,
+    "src/app/components/toasts/info-toast-container/info-toast-container.component.sass": {
+      "bytes": 406,
       "imports": []
     },
-    "src/app/app.component.sass": {
-      "bytes": 1038,
-      "imports": []
-    },
-    "src/app/pages/home/home.component.sass": {
-      "bytes": 771,
+    "src/app/components/button-progress-wrapper/button-progress-wrapper.component.sass": {
+      "bytes": 779,
       "imports": []
     },
     "src/app/components/toasts/info-toast/info-toast.component.sass": {
@@ -11047,12 +11043,16 @@
       "bytes": 2078,
       "imports": []
     },
-    "src/app/components/button-progress-wrapper/button-progress-wrapper.component.sass": {
-      "bytes": 779,
+    "src/app/app.component.sass": {
+      "bytes": 1038,
       "imports": []
     },
     "src/app/components/slidebar/slide-bar.component.sass": {
       "bytes": 753,
+      "imports": []
+    },
+    "src/app/components/toggler/toggler.component.sass": {
+      "bytes": 260,
       "imports": []
     },
     "node_modules/zone.js/fesm2015/zone.js": {
@@ -12366,26 +12366,6 @@
       "bytes": 27,
       "ng-component": true
     },
-    "info-toast-container.component-RH4JO7AS.css": {
-      "imports": [],
-      "inputs": {
-        "src/app/components/toasts/info-toast-container/info-toast-container.component.sass": {
-          "bytesInOutput": 320
-        }
-      },
-      "bytes": 321,
-      "ng-component": true
-    },
-    "toggler.component-SERSSM4P.css": {
-      "imports": [],
-      "inputs": {
-        "src/app/components/toggler/toggler.component.sass": {
-          "bytesInOutput": 196
-        }
-      },
-      "bytes": 197,
-      "ng-component": true
-    },
     "third-party.component-VCK5J5W4.css": {
       "imports": [],
       "inputs": {
@@ -12394,6 +12374,26 @@
         }
       },
       "bytes": 65,
+      "ng-component": true
+    },
+    "imprint.component-RPGCYQNQ.css": {
+      "imports": [],
+      "inputs": {
+        "src/app/pages/imprint/imprint.component.sass": {
+          "bytesInOutput": 33
+        }
+      },
+      "bytes": 34,
+      "ng-component": true
+    },
+    "home.component-WUCG23TO.css": {
+      "imports": [],
+      "inputs": {
+        "src/app/pages/home/home.component.sass": {
+          "bytesInOutput": 614
+        }
+      },
+      "bytes": 615,
       "ng-component": true
     },
     "about.component-7ZBTVZD5.css": {
@@ -12416,34 +12416,24 @@
       "bytes": 34,
       "ng-component": true
     },
-    "imprint.component-RPGCYQNQ.css": {
+    "info-toast-container.component-RH4JO7AS.css": {
       "imports": [],
       "inputs": {
-        "src/app/pages/imprint/imprint.component.sass": {
-          "bytesInOutput": 33
+        "src/app/components/toasts/info-toast-container/info-toast-container.component.sass": {
+          "bytesInOutput": 320
         }
       },
-      "bytes": 34,
+      "bytes": 321,
       "ng-component": true
     },
-    "app.component-3SLLWWBO.css": {
+    "button-progress-wrapper.component-AW5UHRZ2.css": {
       "imports": [],
       "inputs": {
-        "src/app/app.component.sass": {
-          "bytesInOutput": 823
+        "src/app/components/button-progress-wrapper/button-progress-wrapper.component.sass": {
+          "bytesInOutput": 657
         }
       },
-      "bytes": 824,
-      "ng-component": true
-    },
-    "home.component-WUCG23TO.css": {
-      "imports": [],
-      "inputs": {
-        "src/app/pages/home/home.component.sass": {
-          "bytesInOutput": 614
-        }
-      },
-      "bytes": 615,
+      "bytes": 658,
       "ng-component": true
     },
     "info-toast.component-WEQ3EE3L.css": {
@@ -12466,14 +12456,14 @@
       "bytes": 1638,
       "ng-component": true
     },
-    "button-progress-wrapper.component-AW5UHRZ2.css": {
+    "app.component-3SLLWWBO.css": {
       "imports": [],
       "inputs": {
-        "src/app/components/button-progress-wrapper/button-progress-wrapper.component.sass": {
-          "bytesInOutput": 657
+        "src/app/app.component.sass": {
+          "bytesInOutput": 823
         }
       },
-      "bytes": 658,
+      "bytes": 824,
       "ng-component": true
     },
     "slide-bar.component-LZ2TB5K4.css": {
@@ -12484,6 +12474,16 @@
         }
       },
       "bytes": 574,
+      "ng-component": true
+    },
+    "toggler.component-SERSSM4P.css": {
+      "imports": [],
+      "inputs": {
+        "src/app/components/toggler/toggler.component.sass": {
+          "bytesInOutput": 196
+        }
+      },
+      "bytes": 197,
       "ng-component": true
     },
     "polyfills-FFHMD2TL.js": {

@@ -1,11 +1,11 @@
 {
   "name": "MisterLister",
   "short_name": "MisterLister",
-  "start_url": "/",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#D1CB2B",
-  "scope": "/MisterLister/",
+  "start_url": ".",
+  "scope": ".",
   "icons": [
     {
       "src": "logo-192.png",
