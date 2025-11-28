@@ -1,0 +1,209 @@
+@use "@angular/material" as mat;
+@use "sass:map";
+@use "src/styles/variables" as *;
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+
+
+// $typography: mat.m2-define-typography-config(
+//   $body-1: mat.m2-define-typography-level(
+//     $font-family: Roboto,
+//     $font-weight: 300,
+//     $font-size: 1rem,
+//     $line-height: 1,
+//     $letter-spacing: normal,
+//   )
+// );
+
+@include mat.core();
+
+$_palettes: (
+  primary: (
+    0: #000000,
+    10: #1e1c00,
+    20: #343200,
+    25: #3f3d00,
+    30: #4b4900,
+    35: #585500,
+    40: #646100,
+    50: #7e7a00,
+    60: #999400,
+    70: #b5b000,
+    80: #d1cb2b,
+    90: #eee848,
+    95: #fdf656,
+    98: #fffbd7,
+    99: #fffbff,
+    100: #ffffff,
+  ),
+  secondary: (
+    0: #000000,
+    10: #311300,
+    20: #512400,
+    25: #612d00,
+    30: #733600,
+    35: #843f00,
+    40: #974900,
+    50: #b75f17,
+    60: #d77830,
+    70: #f89147,
+    80: #ffb687,
+    90: #ffdbc7,
+    95: #ffede4,
+    98: #fff8f5,
+    99: #fffbff,
+    100: #ffffff,
+  ),
+  tertiary: (
+    0: #000000,
+    10: #001e2e,
+    20: #00344c,
+    25: #00405c,
+    30: #004c6c,
+    35: #00587d,
+    40: #00658e,
+    50: #007fb1,
+    60: #2b9ad1,
+    70: #50b5ed,
+    80: #84cfff,
+    90: #c7e7ff,
+    95: #e4f3ff,
+    98: #f6faff,
+    99: #fbfcff,
+    100: #ffffff,
+  ),
+  neutral: (
+    0: #000000,
+    10: #1d1c12,
+    20: #323126,
+    25: #3d3c30,
+    30: #49473b,
+    35: #545346,
+    40: #605f52,
+    50: #7a776a,
+    60: #949182,
+    70: #aeab9c,
+    80: #cac7b7,
+    90: #e7e3d2,
+    95: #f5f1e0,
+    98: #fef9e8,
+    99: #fffbff,
+    100: #ffffff,
+    4: #0f0f06,
+    6: #14140a,
+    12: #212016,
+    17: #2b2a1f,
+    22: #36352a,
+    24: #3b3a2e,
+    87: #dedaca,
+    92: #ece8d7,
+    94: #f2eedd,
+    96: #f8f4e3,
+  ),
+  neutral-variant: (
+    0: #000000,
+    10: #1d1c0c,
+    20: #32311f,
+    25: #3d3c2a,
+    30: #494834,
+    35: #55533f,
+    40: #615f4a,
+    50: #7a7862,
+    60: #94917a,
+    70: #afac94,
+    80: #cbc7ae,
+    90: #e7e3c9,
+    95: #f6f1d7,
+    98: #fefadf,
+    99: #fffbff,
+    100: #ffffff,
+  ),
+  error: (
+    0: #000000,
+    10: #410002,
+    20: #690005,
+    25: #7e0007,
+    30: #93000a,
+    35: #a80710,
+    40: #ba1a1a,
+    50: #de3730,
+    60: #ff5449,
+    70: #ff897d,
+    80: #ffb4ab,
+    90: #ffdad6,
+    95: #ffedea,
+    98: #fff8f7,
+    99: #fffbff,
+    100: #ffffff,
+  ),
+);
+
+$_rest: (
+  secondary: map.get($_palettes, secondary),
+  neutral: map.get($_palettes, neutral),
+  neutral-variant: map.get($_palettes,  neutral-variant),
+  error: map.get($_palettes, error),
+);
+
+$primary-palette: map.merge(map.get($_palettes, primary), $_rest);
+$tertiary-palette: map.merge(map.get($_palettes, tertiary), $_rest);
+
+$my-theme: mat.define-theme((
+  color: (
+    theme-type: dark,
+    primary: $primary-palette,
+    tertiary: $tertiary-palette,
+    use-system-variables: false
+  ),
+  typography: (
+    brand-family: 'Roboto',
+    use-system-variables: false,
+    regular-weight: 300
+  ),
+  density: (
+    scale: -1
+  )
+));
+
+//palette generator from http://mcg.mbitson.com/#!?mcgpalette0=%23a3c54e
+
+:root {
+  @include mat.typography-hierarchy($my-theme);
+  
+  @include mat.core-theme($my-theme);
+  @include mat.badge-theme($my-theme);
+  @include mat.checkbox-theme($my-theme);
+  // @include mat.select-theme($my-theme);
+  @include mat.icon-theme($my-theme);
+  // @include mat.menu-theme($my-theme);
+  @include mat.input-theme($my-theme);
+  // @include mat.datepicker-theme($my-theme);
+  @include mat.form-field-theme($my-theme);
+  @include mat.button-theme($my-theme);
+  @include mat.icon-button-theme($my-theme);
+  @include mat.ripple-theme($my-theme);
+  @include mat.progress-spinner-theme($my-theme);
+  @include mat.tooltip-theme($my-theme);
+  @include mat.dialog-theme($my-theme);
+  @include mat.slide-toggle-theme($my-theme);
+  @include mat.progress-bar-theme($my-theme);
+  
+  $form-density: -5;
+  
+  mat-form-field {
+    @include mat.form-field-density($form-density);
+    @include mat.input-density($form-density);
+    @include mat.datepicker-density($form-density);
+    @include mat.autocomplete-density($form-density);
+    @include mat.select-density($form-density);
+    @include mat.icon-button-density($form-density);
+  }
+  
+  @include mat.strong-focus-indicators-theme($my-theme);
+}
+
+
+html, body {
+  height: 100%;
+}

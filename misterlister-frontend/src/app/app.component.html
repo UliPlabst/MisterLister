@@ -1,0 +1,63 @@
+<nav>
+  <div class="left">
+    <a routerLink="/">
+      <img src="logo.png" alt="Logo" class="logo" />
+    </a>
+    {{util.layout.title$ | async}}
+  </div>
+  <button mat-icon-button (click)="menu.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+</nav>
+<app-info-toast-container></app-info-toast-container>
+<div class="body">
+  <app-slide-bar #menu [toggled]="menuExpanded" alignment="right">
+    <div class="menu-item">
+      @let user = util.user$ | async; 
+      <div>
+        @if(user == null) {
+          No pseudonym selected
+        } 
+        @else {
+          Current pseudonym: {{user}}
+        }
+      </div>
+      <div>
+        <button mat-flat-button  (click)="switchUser()">
+          @if(user == null) {
+            Set pseudonym
+          }
+          @else {
+            Switch pseudonym
+          }
+        </button>
+      </div>
+    </div>
+    <!-- <div class="menu-item">
+      <div>
+        Auto sync
+      </div>
+      <mat-slide-toggle [formControl]="autoSaveCtrl"></mat-slide-toggle>
+    </div> -->
+  </app-slide-bar>
+  <router-outlet>
+    
+  </router-outlet>
+</div>
+<footer class="footer">
+  <a [routerLink]="'/privacy'">
+    Privacy Policy
+  </a>
+  <a [routerLink]="'/imprint'">
+    Impressum
+  </a>
+  <a href="https://github.com/UliPlabst/misterlister">
+    Github
+  </a>
+  <a [routerLink]="'/about'">
+    About
+  </a>
+  <a [routerLink]="'/third-party'">
+    Third-Party
+  </a>
+</footer>

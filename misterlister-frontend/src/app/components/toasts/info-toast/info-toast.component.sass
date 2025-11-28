@@ -1,0 +1,71 @@
+@use "src/styles/variables.sass" as *
+
+:host
+  display: block
+  display: flex
+  flex-direction: column
+  border-radius: 5px
+  position: relative
+  width: 25em
+  pointer-events: auto
+  padding: 15px
+  line-height: 1.3em
+  background-color: #fff
+  .header
+    margin-bottom: 10px
+    display: flex
+    justify-content: space-between
+    align-items: center
+    mat-icon
+      margin-right: 10px
+
+.content
+  white-space: pre-wrap
+
+.detail-dialog-link
+  margin-top: 10px
+  a
+    color: blue
+    text-decoration: underline
+
+.close-button
+  text-decoration: underline
+  margin-top: 10px
+
+.buttons
+  margin-top: 10px
+  display: flex
+  flex-direction: row
+  column-gap: 5px
+
+.progress-bar
+  border-radius: 5px
+  position: relative
+  top: 15px
+
+.my-progress
+  --mdc-linear-progress-active-indicator-color: rgba(0,0,0,0.20)
+  --mdc-linear-progress-track-color: rgba(0,0,0,0.20)
+
+
+
+:host
+  color: $black
+  &.success
+    background-color: rgb(183, 216, 183)
+  &.info
+    background-color: rgb(127, 188, 236)
+  &.busy
+    background-color: rgb(127, 188, 236)
+  &.warn
+    background-color: rgb(127, 188, 236)
+  &.error
+    background-color: lighten(hsl(4, 90%, 68%), 5)
+    color: $white
+  .header
+    .title
+      font-weight: 400
+      
+button.mat-mdc-button-base
+  background-color: $white !important
+  color: $black

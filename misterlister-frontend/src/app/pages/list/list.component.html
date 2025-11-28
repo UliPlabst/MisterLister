@@ -1,0 +1,93 @@
+@if(list) {
+  <app-toggler [toggled]="false">
+    <span toggler-label>List data</span>
+    <span toggler-label-right>Last sync: {{oldState.lastModified | date: 'short' | ifNull: 'never'}}</span>
+    <div class="list-form">
+      <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input matInput [formControl]="form.controls.name" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Description</mat-label>
+        <input matInput [formControl]="form.controls.description" />
+      </mat-form-field>
+    </div>
+    <div class="buttons">
+      <button mat-flat-button (click)="deleteList()">
+        Delete List
+      </button>
+    </div>
+  </app-toggler>
+  <hr/>
+  <app-toggler [toggled]="true">
+    <span toggler-label>Items ({{items.length}})</span>
+    <div class="buttons">
+      <div class="left">
+        <button mat-flat-button (click)="insertItem()">
+          Add item
+        </button>
+        <button mat-flat-button (click)="deleteCompleted()">
+          Delete ticked items
+        </button>
+      </div>
+      <div class="right">
+        <button mat-flat-button (click)="wrapper.invoke(save)"
+          [disabled]="(wrapper.busy$ | async) == 'busy'"
+        >
+          <app-button-progress-wrapper #wrapper color="black">
+            Sync
+          </app-button-progress-wrapper>
+        </button>
+      </div>
+    </div>
+    @if(items.length > 0)
+    {
+      <div cdkDropList class="list-items" (cdkDropListDropped)="drop($event)" [cdkDropListLockAxis]="'y'">
+        @for (item of items; track item) {
+          <div class="list-item" cdkDrag 
+            [cdkDragData]="item"
+            [id]="'item-'+item.key" 
+            [class.checked]="item.state == ItemState.Completed"
+          >
+            <div class="item-placeholder" *cdkDragPlaceholder></div>
+            @let ctrl = item | pureCall: getCtrl;
+            <mat-checkbox [formControl]="ctrl.controls.completed">
+            </mat-checkbox>
+            <input class="name-input" matInput [formControl]="ctrl.controls.name" (keydown)="onItemKeydown(item, $event)"/>
+            <button mat-icon-button class="delete-btn">
+              <mat-icon (click)="removeItem(item)">delete</mat-icon>
+            </button>
+            <button mat-icon-button cdkDragHandle>
+              <mat-icon>drag_handle</mat-icon>
+            </button>
+          </div>
+        }
+      </div>
+      
+    }
+  </app-toggler>
+  <hr/>
+  <app-toggler [toggled]="false">
+    <span toggler-label>Deleted items ({{deletedItems.length}})</span>
+    @if(deletedItems.length > 0)
+    {
+      <div cdkDropList class="list-items" (cdkDropListDropped)="drop($event)" [cdkDropListLockAxis]="'y'">
+        @for (item of deletedItems; track item) {
+          <div class="list-item deleted-item" cdkDrag 
+            [cdkDragData]="item"
+            [id]="'item-'+item.key" 
+            [class.checked]="item.state == ItemState.Completed"
+          >
+            <div class="item-placeholder" *cdkDragPlaceholder></div>
+            @let ctrl = item | pureCall: getCtrl;
+            <input class="name-input" matInput [formControl]="ctrl.controls.name" (keydown)="onItemKeydown(item, $event)"/>
+            <button mat-icon-button (click)="restoreItem(item)">
+              <mat-icon>restore</mat-icon>
+            </button>
+          </div>
+        }
+      </div>
+      
+    }
+  </app-toggler>
+}

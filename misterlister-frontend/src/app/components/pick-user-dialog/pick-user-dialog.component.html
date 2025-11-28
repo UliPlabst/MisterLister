@@ -1,0 +1,25 @@
+<h2 mat-dialog-title>Pick a pseudonym</h2>
+<mat-dialog-content class="mat-typography">
+  <div class="dialog-body-wrapper">
+    <p>
+      Pick a psuedonym to continue. 
+      Your pseudonym will be saved to your local browser storage. 
+    </p>
+    <!--  -->
+    <mat-form-field>
+      <mat-label>Psuedonym</mat-label>
+      <input matInput required [formControl]="ctrl" />
+      @if(ctrl.errors?.required) {
+        <mat-error>Pseudonym is reuqired</mat-error>
+      }
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-flat-button [mat-dialog-close]="null">
+    Cancel
+  </button>
+  <button mat-flat-button [disabled]="ctrl.invalid" color="primary" [mat-dialog-close]="ctrl.value">
+    Ok
+  </button>
+</mat-dialog-actions>

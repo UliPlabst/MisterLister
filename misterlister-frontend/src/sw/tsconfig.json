@@ -1,0 +1,19 @@
+{
+  "include": [
+    "service-worker.ts"
+  ],
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "lib": [
+      "ESNext",
+      "WebWorker"
+    ],
+    "moduleResolution": "node",
+    "strict": false,
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  }
+}

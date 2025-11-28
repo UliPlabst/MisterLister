@@ -1,0 +1,56 @@
+<section>
+  <h1 class="mat-headline-medium">Welcome to MisterLister</h1>
+  <p>
+    MisterLister is a minimal collaborative TODO app that supports offline usage (<a href="https://developer.mozilla.org/de/docs/Web/Progressive_web_apps">read more</a>) without needing to install anything.
+    <br/>
+    This app is fully open source. Read more about how it works on the <a href="https://github.com/UliPlabst/misterlister">Github page</a>.
+  </p>
+</section>
+@if(lists && lists.length > 0) {
+  <section> 
+    <div class="mat-title-medium">Your lists</div>
+    <div class="lists">
+      @for(list of lists; track list) {
+        <a [routerLink]="list | pureCall: getLink">
+          <mat-icon>open_in_new</mat-icon>
+          {{list.name}}
+        </a>
+      }
+    </div>
+  </section>
+}
+<section>
+  <div class="mat-title-medium">Create a new List</div>
+  <div class="input-row">
+    <mat-form-field>
+      <mat-label>List name</mat-label>
+      <input matInput [formControl]="nameCtrl" placeholder="Choose a name for your list"/>
+      @if(nameCtrl.errors?.required) {
+        <mat-error>
+          You must enter a value
+        </mat-error>
+      }
+    </mat-form-field>
+    <button mat-flat-button (click)="createList()">
+      Create
+    </button>
+  </div>
+</section>
+<section>
+  <div class="mat-title-medium">Go to List by ID</div>
+  <div class="input-row">
+    <mat-form-field>
+      <mat-label>Id</mat-label>
+      <input matInput [formControl]="goToCtrl" placeholder="Your List id"/>
+      @if(goToCtrl.errors?.invalid) {
+        <mat-error>
+          This ID is not valid
+        </mat-error>
+      }
+    </mat-form-field>
+    <button mat-flat-button (click)="goToList()">
+      Go
+    </button>
+  </div>
+</section>
+

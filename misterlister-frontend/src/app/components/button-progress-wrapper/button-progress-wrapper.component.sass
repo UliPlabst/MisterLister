@@ -1,0 +1,49 @@
+@use "src/styles/variables" as *
+
+.container
+  position: relative
+  display: flex
+  align-items: center
+  justify-content: center
+  mat-spinner
+    position: absolute
+    // top: 25%
+    display: none
+    // opacity: 0
+    transition: opacity .1s ease-in-out
+  .success-icon
+    position: absolute
+    display: none
+    transition: opacity .1s ease-in-out
+  
+  .content
+    opacity: 1
+    transition: opacity .1s ease-in-out
+    display: flex
+    align-items: center
+    ::ng-deep
+      mat-icon
+        &:not(:only-child)
+          margin-right: $margin-2
+    
+  &.busy
+    mat-spinner
+      display: block
+    .content
+      opacity: 0
+      
+  &.success
+    .success-icon
+      display: block
+    .content
+      opacity: 0
+      
+  &.color-black
+    ::ng-deep
+      // mat-spinner
+      //   circle
+      //     stroke: $black
+      .success-icon
+        color: $black
+      
+  

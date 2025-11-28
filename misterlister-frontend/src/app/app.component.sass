@@ -1,0 +1,54 @@
+@use "src/styles/variables" as *
+
+:host
+  display: flex
+  width: 100vw
+  height: 100%
+  flex-direction: column
+  overflow: hidden
+  
+nav
+  display: flex
+  padding: $margin-4
+  justify-content: space-between
+  align-items: center
+  height: $navbar-height
+  border-bottom: 1px solid $black
+  flex: 0 0 auto
+  box-sizing: border-box
+  width: 100vw
+  border-bottom: 1px solid $border-color
+  .left
+    display: flex
+    align-items: center
+    font-size: 1.3em
+    img
+      width: 1.5em
+      margin-right: $margin-4
+  
+.menu-item
+  padding: $margin-4
+  display: flex
+  align-items: center
+  justify-content: space-between
+  &:hover
+    background-color: $hover-color
+  
+.body
+  flex: 1 1 auto
+  overflow-y: auto
+  overflow-x: hidden
+  // padding: $margin-4
+  box-sizing: border-box
+  width: 100vw
+  
+footer
+  background-color: lighten($bg-color, 10)
+  padding: $margin-4
+  display: grid
+  grid-template-columns: 1fr 1fr 1fr
+  gap: $margin-4
+  justify-items: center
+  a
+    mat-icon
+      vertical-align: baseline

@@ -1,0 +1,27 @@
+<h2 mat-dialog-title>{{data.header}}</h2>
+<mat-dialog-content class="mat-typography">
+  <div class="dialog-body-wrapper">
+    @for (b of data.bodyParagraphs; track b) {
+      <p>{{b}}</p>
+    }
+
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <div>
+    @for (b of data.buttons; track b; let i = $index) {
+      @if(b.color == 'primary') {
+        <button mat-flat-button (click)="onButtonClicked(b)" [disabled]="busy" [color]="b.color" [id]="'btn'+i"
+          >
+          {{b.label}}
+        </button>
+      }
+      @else {
+        <button mat-button (click)="onButtonClicked(b)" [disabled]="busy" [color]="b.color" [id]="'btn'+i"
+          >
+          {{b.label}}
+        </button>
+      }
+    }
+  </div>
+</mat-dialog-actions>

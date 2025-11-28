@@ -1,0 +1,45 @@
+@use "src/styles/variables" as *
+
+:host
+  display: block
+  width: 100%
+  padding: $margin-2
+  box-sizing: border-box
+  
+section
+  &:not(:last-child)
+    margin-bottom: $margin-2
+    border-bottom: 1px dashed $border-color
+    padding-bottom: $margin-2
+  
+.input-row
+  display: flex
+  column-gap: $margin-4
+  mat-form-field
+    flex-grow: 1
+    
+    
+.mat-title-medium
+  margin-bottom: $margin-4
+  
+.lists
+  display: flex
+  flex-direction: column
+  row-gap: $margin-4
+  margin-bottom: $margin-2
+  a
+    display: flex
+    align-items: center
+    border-radius: $border-radius
+    text-decoration: none
+    color: $white
+    &:hover
+      background-color: $hover-color
+    mat-icon
+      margin-right: $margin-4
+      padding: $margin-2
+      
+      
+.input-row
+  button
+    width: 100px

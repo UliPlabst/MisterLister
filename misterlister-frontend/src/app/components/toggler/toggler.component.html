@@ -1,0 +1,17 @@
+<div class="header" matRipple (click)="toggled = !toggled">
+  <div class="left">
+    <mat-icon [inline]="true">{{toggled ? "expand_more" : "chevron_right" }}</mat-icon>
+    &nbsp;
+    <ng-content select="[toggler-label]"></ng-content>
+  </div>
+  <div class="right">
+    <ng-content select="[toggler-label-right]"></ng-content>
+  </div>
+</div>
+@if(toggled) {
+  <div class="body">
+    <ng-content>
+      
+    </ng-content>
+  </div>
+}

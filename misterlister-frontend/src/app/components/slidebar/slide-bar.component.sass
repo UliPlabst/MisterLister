@@ -1,0 +1,42 @@
+@use "src/styles/variables" as *
+// $boxShadow: 0px 2px 2px $shadowCol
+
+:host
+  &.toggled
+    .overlay
+      background-color: rgba(0,0,0,.5)
+      pointer-events: all
+      display: block
+    .content
+      width: 85%
+
+.overlay
+  position: absolute
+  top: $navbar-height
+  left: 0
+  z-index: 499
+  width: 100%
+  height: calc(100% - $navbar-height)
+  background-color: $transparent
+  transition: background-color .5s
+  pointer-events: none
+
+.content
+  position: absolute
+  width: 0
+  height: calc(100% - $navbar-height)
+  top: $navbar-height
+  overflow: hidden
+  white-space: nowrap
+  transition: width .1s ease-in-out
+  z-index: 500
+  background: $bg-color
+  box-shadow: $box-shadow
+  &.left
+    left: 0
+  &.right
+    right: 0
+
+@include desktop()
+  .content
+    max-width: 600px

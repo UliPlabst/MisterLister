@@ -1,0 +1,101 @@
+@use "src/styles/variables" as *
+
+:host
+  display: block
+  ::ng-deep
+    app-toggler
+      .header
+        padding: $margin-1 $margin-2
+      .body
+        padding: 0 $margin-2
+        margin-top: 0
+    
+    
+hr
+  border-bottom: 1px dashed $primary-color
+  border-top: none
+  margin-top: 0
+  margin-bottom: 0
+  
+.list-form
+  display: grid
+  margin-top: $margin-2
+  
+.buttons
+  display: flex
+  justify-content: space-between
+  &:last-child
+    margin-bottom: $margin-4
+  >.left, .right
+    display: flex
+    column-gap: $margin-4
+    
+  
+  
+.list-items
+  margin-top: $margin-4
+  display: flex
+  flex-direction: column
+  row-gap: $margin-4
+  margin-bottom: $margin-4
+  
+.list-item
+  display: flex
+  
+.list-items 
+  border: solid 1px #ccc
+  display: block
+  border-radius: 4px
+  overflow: hidden
+  &.cdk-drop-list-dragging
+    .example-box:not(.cdk-drag-placeholder) 
+      transition: transform 250ms cubic-bezier(0, 0, 0.2, 1)
+
+.list-item 
+  padding: $margin-4
+  box-sizing: border-box
+  border-bottom: solid 1px #ccc
+  display: flex
+  flex-direction: row
+  align-items: center
+  justify-content: space-between
+  box-sizing: border-box
+  background-color: $black
+  &.checked
+    background-color: lighten($black, 5%)
+    input
+      color: darken($white, 20%)
+      text-decoration: line-through
+  &:last-child
+    border: none
+  input
+    font-size: 1.1em
+    color: $white
+    outline: none
+    border: none
+    padding: $margin-2
+    background-color: $transparent
+    flex-grow: 1
+    
+  &:not(:focus-within)
+    .delete-btn
+      display: none
+
+.delete-btn
+  margin-right: $margin-4
+
+.cdk-drag-preview 
+  box-sizing: border-box
+  border-radius: 4px
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12)
+  border: 1px solid $white
+  overflow: hidden
+  
+.cdk-drag-animating 
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1)
+
+.item-placeholder 
+  background: lighten($black, 20%)
+  border: dotted 3px #999
+  min-height: 45px
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1)

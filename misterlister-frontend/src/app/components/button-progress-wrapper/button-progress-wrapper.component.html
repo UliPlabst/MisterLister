@@ -1,0 +1,13 @@
+<div class="container" 
+  [class]="busy$ | async" 
+  [class.color-black]="color == 'black'"
+>
+  <mat-spinner [color]="color" [class]="'color-'+color" [diameter]="19">
+  </mat-spinner>
+  <mat-icon class="success-icon">
+    check
+  </mat-icon>
+  <div class="content">
+    <ng-content></ng-content>
+  </div>
+</div>
