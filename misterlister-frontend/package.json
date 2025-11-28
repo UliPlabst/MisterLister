@@ -12,7 +12,8 @@
     "build:app:prod": "ng build --configuration production",
     "watch:sw": "webpack --config src/sw/webpack.config.js --watch",
     "start": "node scripts/parallel.js start:app watch:sw",
-    "build:prod": "npm run build:app:prod && npm run build:sw:prod && node scripts/copy-sw.js"
+    "build:prod": "npm run build:app:prod && npm run build:sw:prod && node scripts/copy-sw.js",
+    "deploy": "gh-pages -d dist"
   },
   "homepage": "https://uliplabst.github.io/misterlister",
   "private": false,
