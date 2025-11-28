@@ -14,7 +14,8 @@
     "start": "node scripts/parallel.js start:app watch:sw",
     "build:prod": "npm run build:app:prod && npm run build:sw:prod && node scripts/copy-sw.js"
   },
-  "private": true,
+  "homepage": "https://uliplabst.github.io/misterlister",
+  "private": false,
   "dependencies": {
     "@angular/animations": "^19.2.6",
     "@angular/cdk": "^19.2.9",
