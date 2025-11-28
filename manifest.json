@@ -8,13 +8,13 @@
   "scope": ".",
   "screenshots": [
     {
-      "src": "/screenshots/screenshot-wide.png",
+      "src": "screenshot-wide.png",
       "sizes": "1280x720",
       "type": "image/png",
       "form_factor": "wide"
     },
     {
-      "src": "/screenshots/screenshot-mobile.png",
+      "src": "screenshot-mobile.png",
       "sizes": "360x640",
       "type": "image/png",
       "form_factor": "narrow"
