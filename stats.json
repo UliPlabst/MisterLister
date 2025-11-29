@@ -9138,7 +9138,7 @@
       "format": "esm"
     },
     "src/app/services/api.service.ts": {
-      "bytes": 2528,
+      "bytes": 3161,
       "imports": [
         {
           "path": "node_modules/@angular/core/fesm2022/core.mjs",
@@ -9371,12 +9371,12 @@
       "format": "esm"
     },
     "src/app/services/sw.service.ts": {
-      "bytes": 2359,
+      "bytes": 2737,
       "imports": [
         {
-          "path": "@angular/core",
+          "path": "node_modules/@angular/core/fesm2022/core.mjs",
           "kind": "import-statement",
-          "external": true
+          "original": "@angular/core"
         },
         {
           "path": "./storage.service",
@@ -9409,6 +9409,11 @@
           "external": true
         },
         {
+          "path": "src/app/services/info.service.ts",
+          "kind": "import-statement",
+          "original": "./info.service"
+        },
+        {
           "path": "node_modules/@angular/core/fesm2022/core.mjs",
           "kind": "import-statement",
           "original": "@angular/core"
@@ -9427,7 +9432,7 @@
       "format": "esm"
     },
     "src/app/services/utility.service.ts": {
-      "bytes": 3154,
+      "bytes": 3681,
       "imports": [
         {
           "path": "@angular/core",
@@ -9585,7 +9590,7 @@
       "format": "esm"
     },
     "src/app/pages/home/home.component.ts": {
-      "bytes": 8796,
+      "bytes": 9305,
       "imports": [
         {
           "path": "@angular/core",
@@ -9601,6 +9606,11 @@
           "path": "node_modules/@angular/router/fesm2022/router.mjs",
           "kind": "import-statement",
           "original": "@angular/router"
+        },
+        {
+          "path": "node_modules/rxjs/dist/esm/index.js",
+          "kind": "import-statement",
+          "original": "rxjs"
         },
         {
           "path": "src/app/material.module.ts",
@@ -9621,6 +9631,11 @@
           "path": "src/app/types.api",
           "kind": "import-statement",
           "external": true
+        },
+        {
+          "path": "src/app/utils.ts",
+          "kind": "import-statement",
+          "original": "src/app/utils"
         },
         {
           "path": "node_modules/@angular/core/fesm2022/core.mjs",
@@ -9931,7 +9946,7 @@
       "format": "esm"
     },
     "src/app/pages/list/list.component.ts": {
-      "bytes": 23608,
+      "bytes": 24343,
       "imports": [
         {
           "path": "node_modules/@angular/cdk/fesm2022/drag-drop.mjs",
@@ -10811,7 +10826,7 @@
       "format": "esm"
     },
     "src/app/components/toasts/info-toast-container/info-toast-container.component.ts": {
-      "bytes": 3234,
+      "bytes": 3314,
       "imports": [
         {
           "path": "node_modules/@angular/core/fesm2022/core.mjs",
@@ -10847,7 +10862,7 @@
       "format": "esm"
     },
     "src/app/app.component.ts": {
-      "bytes": 8034,
+      "bytes": 8912,
       "imports": [
         {
           "path": "src/app/extensions/extensions.ts",
@@ -10913,6 +10928,16 @@
           "path": "src/app/components/toasts/info-toasts.module.ts",
           "kind": "import-statement",
           "original": "./components/toasts/info-toasts.module"
+        },
+        {
+          "path": "rxjs",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "./types.api",
+          "kind": "import-statement",
+          "external": true
         },
         {
           "path": "node_modules/@angular/core/fesm2022/core.mjs",
@@ -11003,20 +11028,20 @@
       ],
       "format": "esm"
     },
-    "src/app/components/pick-user-dialog/pick-user-dialog.component.sass": {
-      "bytes": 33,
+    "src/app/components/toasts/info-toast-container/info-toast-container.component.sass": {
+      "bytes": 499,
       "imports": []
     },
-    "src/app/components/toggler/toggler.component.sass": {
-      "bytes": 260,
+    "src/app/pages/imprint/imprint.component.sass": {
+      "bytes": 44,
+      "imports": []
+    },
+    "src/app/pages/privacy/privacy.component.sass": {
+      "bytes": 44,
       "imports": []
     },
     "src/app/pages/home/home.component.sass": {
       "bytes": 771,
-      "imports": []
-    },
-    "src/app/components/toasts/info-toast-container/info-toast-container.component.sass": {
-      "bytes": 406,
       "imports": []
     },
     "src/app/pages/about/about.component.sass": {
@@ -11027,32 +11052,32 @@
       "bytes": 84,
       "imports": []
     },
-    "src/app/components/button-progress-wrapper/button-progress-wrapper.component.sass": {
-      "bytes": 779,
+    "src/app/components/toggler/toggler.component.sass": {
+      "bytes": 260,
       "imports": []
     },
-    "src/app/pages/privacy/privacy.component.sass": {
-      "bytes": 44,
-      "imports": []
-    },
-    "src/app/components/slidebar/slide-bar.component.sass": {
-      "bytes": 753,
+    "src/app/app.component.sass": {
+      "bytes": 1042,
       "imports": []
     },
     "src/app/components/toasts/info-toast/info-toast.component.sass": {
       "bytes": 1373,
       "imports": []
     },
-    "src/app/pages/imprint/imprint.component.sass": {
-      "bytes": 44,
+    "src/app/components/slidebar/slide-bar.component.sass": {
+      "bytes": 753,
       "imports": []
     },
-    "src/app/app.component.sass": {
-      "bytes": 1038,
+    "src/app/components/button-progress-wrapper/button-progress-wrapper.component.sass": {
+      "bytes": 779,
       "imports": []
     },
     "src/app/pages/list/list.component.sass": {
       "bytes": 2078,
+      "imports": []
+    },
+    "src/app/components/pick-user-dialog/pick-user-dialog.component.sass": {
+      "bytes": 33,
       "imports": []
     },
     "node_modules/zone.js/fesm2015/zone.js": {
@@ -11438,7 +11463,7 @@
       },
       "bytes": 1484
     },
-    "main-5FHIY5QT.js": {
+    "main-Y5GIO5AN.js": {
       "imports": [
         {
           "path": "chunk-EQDQRRRY.js",
@@ -11843,7 +11868,7 @@
           "bytesInOutput": 0
         },
         "node_modules/@angular/core/fesm2022/core.mjs": {
-          "bytesInOutput": 123890
+          "bytesInOutput": 124103
         },
         "node_modules/@angular/common/fesm2022/dom_tokens-rA0ACyx7.mjs": {
           "bytesInOutput": 17
@@ -12086,7 +12111,7 @@
           "bytesInOutput": 31
         },
         "src/app/services/api.service.ts": {
-          "bytesInOutput": 1047
+          "bytesInOutput": 1331
         },
         "src/app/components/confirm-dialog/confirm-dialog.component.ts": {
           "bytesInOutput": 1804
@@ -12110,10 +12135,10 @@
           "bytesInOutput": 211
         },
         "src/app/services/sw.service.ts": {
-          "bytesInOutput": 1027
+          "bytesInOutput": 1249
         },
         "src/app/services/utility.service.ts": {
-          "bytesInOutput": 1102
+          "bytesInOutput": 1412
         },
         "src/app/guards/EnsureUserGuard.ts": {
           "bytesInOutput": 261
@@ -12122,7 +12147,7 @@
           "bytesInOutput": 243
         },
         "src/app/pages/home/home.component.ts": {
-          "bytesInOutput": 4160
+          "bytesInOutput": 4403
         },
         "node_modules/@angular/cdk/fesm2022/drag-drop.mjs": {
           "bytesInOutput": 55072
@@ -12140,7 +12165,7 @@
           "bytesInOutput": 143
         },
         "src/app/pages/list/list.component.ts": {
-          "bytesInOutput": 10902
+          "bytesInOutput": 11309
         },
         "src/app/utils/locale.ts": {
           "bytesInOutput": 2607
@@ -12206,16 +12231,16 @@
           "bytesInOutput": 2669
         },
         "src/app/components/toasts/info-toast-container/info-toast-container.component.ts": {
-          "bytesInOutput": 1222
+          "bytesInOutput": 1302
         },
         "src/app/app.component.ts": {
-          "bytesInOutput": 3299
+          "bytesInOutput": 3690
         },
         "src/main.ts": {
           "bytesInOutput": 113
         }
       },
-      "bytes": 844417
+      "bytes": 846567
     },
     "chunk-C2DR6QYM.js": {
       "imports": [
@@ -12356,24 +12381,34 @@
       "inputs": {},
       "bytes": 1279
     },
-    "pick-user-dialog.component-7GNLVY2X.css": {
+    "info-toast-container.component-GQ6FLAIG.css": {
       "imports": [],
       "inputs": {
-        "src/app/components/pick-user-dialog/pick-user-dialog.component.sass": {
-          "bytesInOutput": 26
+        "src/app/components/toasts/info-toast-container/info-toast-container.component.sass": {
+          "bytesInOutput": 389
         }
       },
-      "bytes": 27,
+      "bytes": 390,
       "ng-component": true
     },
-    "toggler.component-SERSSM4P.css": {
+    "imprint.component-RPGCYQNQ.css": {
       "imports": [],
       "inputs": {
-        "src/app/components/toggler/toggler.component.sass": {
-          "bytesInOutput": 196
+        "src/app/pages/imprint/imprint.component.sass": {
+          "bytesInOutput": 33
         }
       },
-      "bytes": 197,
+      "bytes": 34,
+      "ng-component": true
+    },
+    "privacy.component-25H3G5DA.css": {
+      "imports": [],
+      "inputs": {
+        "src/app/pages/privacy/privacy.component.sass": {
+          "bytesInOutput": 33
+        }
+      },
+      "bytes": 34,
       "ng-component": true
     },
     "home.component-WUCG23TO.css": {
@@ -12384,16 +12419,6 @@
         }
       },
       "bytes": 615,
-      "ng-component": true
-    },
-    "info-toast-container.component-RH4JO7AS.css": {
-      "imports": [],
-      "inputs": {
-        "src/app/components/toasts/info-toast-container/info-toast-container.component.sass": {
-          "bytesInOutput": 320
-        }
-      },
-      "bytes": 321,
       "ng-component": true
     },
     "about.component-7ZBTVZD5.css": {
@@ -12416,34 +12441,24 @@
       "bytes": 65,
       "ng-component": true
     },
-    "button-progress-wrapper.component-AW5UHRZ2.css": {
+    "toggler.component-SERSSM4P.css": {
       "imports": [],
       "inputs": {
-        "src/app/components/button-progress-wrapper/button-progress-wrapper.component.sass": {
-          "bytesInOutput": 657
+        "src/app/components/toggler/toggler.component.sass": {
+          "bytesInOutput": 196
         }
       },
-      "bytes": 658,
+      "bytes": 197,
       "ng-component": true
     },
-    "privacy.component-25H3G5DA.css": {
+    "app.component-QEECYSF6.css": {
       "imports": [],
       "inputs": {
-        "src/app/pages/privacy/privacy.component.sass": {
-          "bytesInOutput": 33
+        "src/app/app.component.sass": {
+          "bytesInOutput": 827
         }
       },
-      "bytes": 34,
-      "ng-component": true
-    },
-    "slide-bar.component-LZ2TB5K4.css": {
-      "imports": [],
-      "inputs": {
-        "src/app/components/slidebar/slide-bar.component.sass": {
-          "bytesInOutput": 573
-        }
-      },
-      "bytes": 574,
+      "bytes": 828,
       "ng-component": true
     },
     "info-toast.component-WEQ3EE3L.css": {
@@ -12456,24 +12471,24 @@
       "bytes": 1073,
       "ng-component": true
     },
-    "imprint.component-RPGCYQNQ.css": {
+    "slide-bar.component-LZ2TB5K4.css": {
       "imports": [],
       "inputs": {
-        "src/app/pages/imprint/imprint.component.sass": {
-          "bytesInOutput": 33
+        "src/app/components/slidebar/slide-bar.component.sass": {
+          "bytesInOutput": 573
         }
       },
-      "bytes": 34,
+      "bytes": 574,
       "ng-component": true
     },
-    "app.component-3SLLWWBO.css": {
+    "button-progress-wrapper.component-AW5UHRZ2.css": {
       "imports": [],
       "inputs": {
-        "src/app/app.component.sass": {
-          "bytesInOutput": 823
+        "src/app/components/button-progress-wrapper/button-progress-wrapper.component.sass": {
+          "bytesInOutput": 657
         }
       },
-      "bytes": 824,
+      "bytes": 658,
       "ng-component": true
     },
     "list.component-SJN52QAK.css": {
@@ -12484,6 +12499,16 @@
         }
       },
       "bytes": 1638,
+      "ng-component": true
+    },
+    "pick-user-dialog.component-7GNLVY2X.css": {
+      "imports": [],
+      "inputs": {
+        "src/app/components/pick-user-dialog/pick-user-dialog.component.sass": {
+          "bytesInOutput": 26
+        }
+      },
+      "bytes": 27,
       "ng-component": true
     },
     "polyfills-FFHMD2TL.js": {
