@@ -11028,24 +11028,20 @@
       ],
       "format": "esm"
     },
+    "src/app/components/pick-user-dialog/pick-user-dialog.component.sass": {
+      "bytes": 33,
+      "imports": []
+    },
     "src/app/components/toasts/info-toast-container/info-toast-container.component.sass": {
       "bytes": 499,
       "imports": []
     },
-    "src/app/pages/imprint/imprint.component.sass": {
-      "bytes": 44,
+    "src/app/components/toasts/info-toast/info-toast.component.sass": {
+      "bytes": 1373,
       "imports": []
     },
-    "src/app/pages/privacy/privacy.component.sass": {
-      "bytes": 44,
-      "imports": []
-    },
-    "src/app/pages/home/home.component.sass": {
-      "bytes": 771,
-      "imports": []
-    },
-    "src/app/pages/about/about.component.sass": {
-      "bytes": 44,
+    "src/app/pages/list/list.component.sass": {
+      "bytes": 2078,
       "imports": []
     },
     "src/app/pages/third-party/third-party.component.sass": {
@@ -11056,28 +11052,32 @@
       "bytes": 260,
       "imports": []
     },
-    "src/app/app.component.sass": {
-      "bytes": 1042,
-      "imports": []
-    },
-    "src/app/components/toasts/info-toast/info-toast.component.sass": {
-      "bytes": 1373,
-      "imports": []
-    },
-    "src/app/components/slidebar/slide-bar.component.sass": {
-      "bytes": 753,
+    "src/app/pages/home/home.component.sass": {
+      "bytes": 771,
       "imports": []
     },
     "src/app/components/button-progress-wrapper/button-progress-wrapper.component.sass": {
       "bytes": 779,
       "imports": []
     },
-    "src/app/pages/list/list.component.sass": {
-      "bytes": 2078,
+    "src/app/components/slidebar/slide-bar.component.sass": {
+      "bytes": 753,
       "imports": []
     },
-    "src/app/components/pick-user-dialog/pick-user-dialog.component.sass": {
-      "bytes": 33,
+    "src/app/pages/imprint/imprint.component.sass": {
+      "bytes": 44,
+      "imports": []
+    },
+    "src/app/app.component.sass": {
+      "bytes": 1042,
+      "imports": []
+    },
+    "src/app/pages/privacy/privacy.component.sass": {
+      "bytes": 44,
+      "imports": []
+    },
+    "src/app/pages/about/about.component.sass": {
+      "bytes": 44,
       "imports": []
     },
     "node_modules/zone.js/fesm2015/zone.js": {
@@ -12381,7 +12381,17 @@
       "inputs": {},
       "bytes": 1279
     },
-    "info-toast-container.component-GQ6FLAIG.css": {
+    "pick-user-dialog.component-OGXSEVRI.css": {
+      "imports": [],
+      "inputs": {
+        "src/app/components/pick-user-dialog/pick-user-dialog.component.sass": {
+          "bytesInOutput": 26
+        }
+      },
+      "bytes": 27,
+      "ng-component": true
+    },
+    "info-toast-container.component-DEUEZV2R.css": {
       "imports": [],
       "inputs": {
         "src/app/components/toasts/info-toast-container/info-toast-container.component.sass": {
@@ -12391,77 +12401,7 @@
       "bytes": 390,
       "ng-component": true
     },
-    "imprint.component-RPGCYQNQ.css": {
-      "imports": [],
-      "inputs": {
-        "src/app/pages/imprint/imprint.component.sass": {
-          "bytesInOutput": 33
-        }
-      },
-      "bytes": 34,
-      "ng-component": true
-    },
-    "privacy.component-25H3G5DA.css": {
-      "imports": [],
-      "inputs": {
-        "src/app/pages/privacy/privacy.component.sass": {
-          "bytesInOutput": 33
-        }
-      },
-      "bytes": 34,
-      "ng-component": true
-    },
-    "home.component-WUCG23TO.css": {
-      "imports": [],
-      "inputs": {
-        "src/app/pages/home/home.component.sass": {
-          "bytesInOutput": 614
-        }
-      },
-      "bytes": 615,
-      "ng-component": true
-    },
-    "about.component-7ZBTVZD5.css": {
-      "imports": [],
-      "inputs": {
-        "src/app/pages/about/about.component.sass": {
-          "bytesInOutput": 33
-        }
-      },
-      "bytes": 34,
-      "ng-component": true
-    },
-    "third-party.component-VCK5J5W4.css": {
-      "imports": [],
-      "inputs": {
-        "src/app/pages/third-party/third-party.component.sass": {
-          "bytesInOutput": 64
-        }
-      },
-      "bytes": 65,
-      "ng-component": true
-    },
-    "toggler.component-SERSSM4P.css": {
-      "imports": [],
-      "inputs": {
-        "src/app/components/toggler/toggler.component.sass": {
-          "bytesInOutput": 196
-        }
-      },
-      "bytes": 197,
-      "ng-component": true
-    },
-    "app.component-QEECYSF6.css": {
-      "imports": [],
-      "inputs": {
-        "src/app/app.component.sass": {
-          "bytesInOutput": 827
-        }
-      },
-      "bytes": 828,
-      "ng-component": true
-    },
-    "info-toast.component-WEQ3EE3L.css": {
+    "info-toast.component-S6W4YTLR.css": {
       "imports": [],
       "inputs": {
         "src/app/components/toasts/info-toast/info-toast.component.sass": {
@@ -12471,27 +12411,7 @@
       "bytes": 1073,
       "ng-component": true
     },
-    "slide-bar.component-LZ2TB5K4.css": {
-      "imports": [],
-      "inputs": {
-        "src/app/components/slidebar/slide-bar.component.sass": {
-          "bytesInOutput": 573
-        }
-      },
-      "bytes": 574,
-      "ng-component": true
-    },
-    "button-progress-wrapper.component-AW5UHRZ2.css": {
-      "imports": [],
-      "inputs": {
-        "src/app/components/button-progress-wrapper/button-progress-wrapper.component.sass": {
-          "bytesInOutput": 657
-        }
-      },
-      "bytes": 658,
-      "ng-component": true
-    },
-    "list.component-SJN52QAK.css": {
+    "list.component-H2ZW7ZIL.css": {
       "imports": [],
       "inputs": {
         "src/app/pages/list/list.component.sass": {
@@ -12501,14 +12421,94 @@
       "bytes": 1638,
       "ng-component": true
     },
-    "pick-user-dialog.component-7GNLVY2X.css": {
+    "third-party.component-PFMS3POE.css": {
       "imports": [],
       "inputs": {
-        "src/app/components/pick-user-dialog/pick-user-dialog.component.sass": {
-          "bytesInOutput": 26
+        "src/app/pages/third-party/third-party.component.sass": {
+          "bytesInOutput": 64
         }
       },
-      "bytes": 27,
+      "bytes": 65,
+      "ng-component": true
+    },
+    "toggler.component-MC5MA5DA.css": {
+      "imports": [],
+      "inputs": {
+        "src/app/components/toggler/toggler.component.sass": {
+          "bytesInOutput": 196
+        }
+      },
+      "bytes": 197,
+      "ng-component": true
+    },
+    "home.component-ORRSUNCD.css": {
+      "imports": [],
+      "inputs": {
+        "src/app/pages/home/home.component.sass": {
+          "bytesInOutput": 614
+        }
+      },
+      "bytes": 615,
+      "ng-component": true
+    },
+    "button-progress-wrapper.component-725K5UWR.css": {
+      "imports": [],
+      "inputs": {
+        "src/app/components/button-progress-wrapper/button-progress-wrapper.component.sass": {
+          "bytesInOutput": 657
+        }
+      },
+      "bytes": 658,
+      "ng-component": true
+    },
+    "slide-bar.component-CSVTKMT5.css": {
+      "imports": [],
+      "inputs": {
+        "src/app/components/slidebar/slide-bar.component.sass": {
+          "bytesInOutput": 573
+        }
+      },
+      "bytes": 574,
+      "ng-component": true
+    },
+    "imprint.component-7XOM6YJD.css": {
+      "imports": [],
+      "inputs": {
+        "src/app/pages/imprint/imprint.component.sass": {
+          "bytesInOutput": 33
+        }
+      },
+      "bytes": 34,
+      "ng-component": true
+    },
+    "app.component-DECZRQ5S.css": {
+      "imports": [],
+      "inputs": {
+        "src/app/app.component.sass": {
+          "bytesInOutput": 827
+        }
+      },
+      "bytes": 828,
+      "ng-component": true
+    },
+    "privacy.component-RDOCDXA4.css": {
+      "imports": [],
+      "inputs": {
+        "src/app/pages/privacy/privacy.component.sass": {
+          "bytesInOutput": 33
+        }
+      },
+      "bytes": 34,
+      "ng-component": true
+    },
+    "about.component-575PEGCA.css": {
+      "imports": [],
+      "inputs": {
+        "src/app/pages/about/about.component.sass": {
+          "bytesInOutput": 33
+        }
+      },
+      "bytes": 34,
       "ng-component": true
     },
     "polyfills-FFHMD2TL.js": {
