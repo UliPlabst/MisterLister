@@ -11028,48 +11028,36 @@
       ],
       "format": "esm"
     },
-    "src/app/components/toasts/info-toast-container/info-toast-container.component.sass": {
-      "bytes": 499,
+    "src/app/components/pick-user-dialog/pick-user-dialog.component.sass": {
+      "bytes": 33,
       "imports": []
     },
     "src/app/app.component.sass": {
       "bytes": 1042,
       "imports": []
     },
-    "src/app/pages/imprint/imprint.component.sass": {
-      "bytes": 44,
-      "imports": []
-    },
-    "src/app/pages/third-party/third-party.component.sass": {
-      "bytes": 84,
-      "imports": []
-    },
-    "src/app/pages/home/home.component.sass": {
-      "bytes": 771,
-      "imports": []
-    },
-    "src/app/components/button-progress-wrapper/button-progress-wrapper.component.sass": {
-      "bytes": 779,
+    "src/app/components/toasts/info-toast-container/info-toast-container.component.sass": {
+      "bytes": 499,
       "imports": []
     },
     "src/app/components/toggler/toggler.component.sass": {
       "bytes": 260,
       "imports": []
     },
+    "src/app/components/button-progress-wrapper/button-progress-wrapper.component.sass": {
+      "bytes": 779,
+      "imports": []
+    },
+    "src/app/pages/home/home.component.sass": {
+      "bytes": 771,
+      "imports": []
+    },
     "src/app/pages/about/about.component.sass": {
       "bytes": 44,
       "imports": []
     },
-    "src/app/components/toasts/info-toast/info-toast.component.sass": {
-      "bytes": 1373,
-      "imports": []
-    },
-    "src/app/components/pick-user-dialog/pick-user-dialog.component.sass": {
-      "bytes": 33,
-      "imports": []
-    },
-    "src/app/pages/privacy/privacy.component.sass": {
-      "bytes": 44,
+    "src/app/pages/third-party/third-party.component.sass": {
+      "bytes": 84,
       "imports": []
     },
     "src/app/pages/list/list.component.sass": {
@@ -11078,6 +11066,18 @@
     },
     "src/app/components/slidebar/slide-bar.component.sass": {
       "bytes": 753,
+      "imports": []
+    },
+    "src/app/components/toasts/info-toast/info-toast.component.sass": {
+      "bytes": 1373,
+      "imports": []
+    },
+    "src/app/pages/imprint/imprint.component.sass": {
+      "bytes": 44,
+      "imports": []
+    },
+    "src/app/pages/privacy/privacy.component.sass": {
+      "bytes": 44,
       "imports": []
     },
     "node_modules/zone.js/fesm2015/zone.js": {
@@ -12381,14 +12381,14 @@
       "inputs": {},
       "bytes": 1279
     },
-    "info-toast-container.component-DEUEZV2R.css": {
+    "pick-user-dialog.component-OGXSEVRI.css": {
       "imports": [],
       "inputs": {
-        "src/app/components/toasts/info-toast-container/info-toast-container.component.sass": {
-          "bytesInOutput": 389
+        "src/app/components/pick-user-dialog/pick-user-dialog.component.sass": {
+          "bytesInOutput": 26
         }
       },
-      "bytes": 390,
+      "bytes": 27,
       "ng-component": true
     },
     "app.component-DECZRQ5S.css": {
@@ -12401,10 +12401,50 @@
       "bytes": 828,
       "ng-component": true
     },
-    "imprint.component-7XOM6YJD.css": {
+    "info-toast-container.component-DEUEZV2R.css": {
       "imports": [],
       "inputs": {
-        "src/app/pages/imprint/imprint.component.sass": {
+        "src/app/components/toasts/info-toast-container/info-toast-container.component.sass": {
+          "bytesInOutput": 389
+        }
+      },
+      "bytes": 390,
+      "ng-component": true
+    },
+    "toggler.component-MC5MA5DA.css": {
+      "imports": [],
+      "inputs": {
+        "src/app/components/toggler/toggler.component.sass": {
+          "bytesInOutput": 196
+        }
+      },
+      "bytes": 197,
+      "ng-component": true
+    },
+    "button-progress-wrapper.component-725K5UWR.css": {
+      "imports": [],
+      "inputs": {
+        "src/app/components/button-progress-wrapper/button-progress-wrapper.component.sass": {
+          "bytesInOutput": 657
+        }
+      },
+      "bytes": 658,
+      "ng-component": true
+    },
+    "home.component-ORRSUNCD.css": {
+      "imports": [],
+      "inputs": {
+        "src/app/pages/home/home.component.sass": {
+          "bytesInOutput": 614
+        }
+      },
+      "bytes": 615,
+      "ng-component": true
+    },
+    "about.component-575PEGCA.css": {
+      "imports": [],
+      "inputs": {
+        "src/app/pages/about/about.component.sass": {
           "bytesInOutput": 33
         }
       },
@@ -12419,76 +12459,6 @@
         }
       },
       "bytes": 65,
-      "ng-component": true
-    },
-    "home.component-ORRSUNCD.css": {
-      "imports": [],
-      "inputs": {
-        "src/app/pages/home/home.component.sass": {
-          "bytesInOutput": 614
-        }
-      },
-      "bytes": 615,
-      "ng-component": true
-    },
-    "button-progress-wrapper.component-725K5UWR.css": {
-      "imports": [],
-      "inputs": {
-        "src/app/components/button-progress-wrapper/button-progress-wrapper.component.sass": {
-          "bytesInOutput": 657
-        }
-      },
-      "bytes": 658,
-      "ng-component": true
-    },
-    "toggler.component-MC5MA5DA.css": {
-      "imports": [],
-      "inputs": {
-        "src/app/components/toggler/toggler.component.sass": {
-          "bytesInOutput": 196
-        }
-      },
-      "bytes": 197,
-      "ng-component": true
-    },
-    "about.component-575PEGCA.css": {
-      "imports": [],
-      "inputs": {
-        "src/app/pages/about/about.component.sass": {
-          "bytesInOutput": 33
-        }
-      },
-      "bytes": 34,
-      "ng-component": true
-    },
-    "info-toast.component-S6W4YTLR.css": {
-      "imports": [],
-      "inputs": {
-        "src/app/components/toasts/info-toast/info-toast.component.sass": {
-          "bytesInOutput": 1072
-        }
-      },
-      "bytes": 1073,
-      "ng-component": true
-    },
-    "pick-user-dialog.component-OGXSEVRI.css": {
-      "imports": [],
-      "inputs": {
-        "src/app/components/pick-user-dialog/pick-user-dialog.component.sass": {
-          "bytesInOutput": 26
-        }
-      },
-      "bytes": 27,
-      "ng-component": true
-    },
-    "privacy.component-RDOCDXA4.css": {
-      "imports": [],
-      "inputs": {
-        "src/app/pages/privacy/privacy.component.sass": {
-          "bytesInOutput": 33
-        }
-      },
-      "bytes": 34,
       "ng-component": true
     },
     "list.component-H2ZW7ZIL.css": {
@@ -12509,6 +12479,36 @@
         }
       },
       "bytes": 574,
+      "ng-component": true
+    },
+    "info-toast.component-S6W4YTLR.css": {
+      "imports": [],
+      "inputs": {
+        "src/app/components/toasts/info-toast/info-toast.component.sass": {
+          "bytesInOutput": 1072
+        }
+      },
+      "bytes": 1073,
+      "ng-component": true
+    },
+    "imprint.component-7XOM6YJD.css": {
+      "imports": [],
+      "inputs": {
+        "src/app/pages/imprint/imprint.component.sass": {
+          "bytesInOutput": 33
+        }
+      },
+      "bytes": 34,
+      "ng-component": true
+    },
+    "privacy.component-RDOCDXA4.css": {
+      "imports": [],
+      "inputs": {
+        "src/app/pages/privacy/privacy.component.sass": {
+          "bytesInOutput": 33
+        }
+      },
+      "bytes": 34,
       "ng-component": true
     },
     "polyfills-FFHMD2TL.js": {
