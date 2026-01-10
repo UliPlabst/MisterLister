@@ -10,20 +10,22 @@ export type ListEntry = {
   old: ICheckList;
   id: string;
   pending: Date;
-  user: string;
 }
 
 export class MisterListerDb extends Dexie
 {
   lists: Table<ListEntry, string>;
   keyValues: Table<{ key: string, value: any }, string>;
+  keys: Table<{ id: string, key: CryptoKey }, string>
+  
   constructor()
   {
     super("MisterListerDB");
     this.version(1)
       .stores({
         lists: "++id, value",
-        keyValues: "key, value"
+        keyValues: "key, value",
+        keys: "id, key"
       });
     this.lists = this.table("lists");
     this.keyValues = this.table("keyValues");

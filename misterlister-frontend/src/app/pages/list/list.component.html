@@ -1,5 +1,5 @@
 @if(list) {
-  <app-toggler [toggled]="false">
+  <app-toggler [toggled]="toggleListData">
     <span toggler-label>List data</span>
     <span toggler-label-right>Last sync: {{oldState.lastModified | date: 'short' | ifNull: 'never'}}</span>
     <div class="list-form">
@@ -15,6 +15,9 @@
     <div class="buttons">
       <button mat-flat-button (click)="deleteList()">
         Delete List
+      </button>
+      <button mat-flat-button (click)="exportMasterKey()">
+        Export master key
       </button>
     </div>
   </app-toggler>

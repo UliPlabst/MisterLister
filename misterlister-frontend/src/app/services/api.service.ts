@@ -1,37 +1,63 @@
 import { ErrorHandler, inject, Injectable } from "@angular/core";
+import { firstValueFrom } from "rxjs";
+import { API_URI } from "src/global/environment";
+import { InputMasterKeyDialogComponent } from "../components/input-master-key-dialog/input-master-key-dialog.component";
 import { ErrorCode, IApiError, ICheckList, ISaveListDTO } from "../types.api";
+import { importKey } from "../utils";
+import { decryptList, decryptListWithDialog, encryptList } from "../utils/utils.list";
+import { DialogService } from "./dialog.service";
 import { InfoService } from "./info.service";
-import { API_HOST } from "src/global/environment";
+import { StorageService } from "./storage.service";
 
 @Injectable({
   providedIn: "root"
 })
 export class ApiService
 {
-  baseUri = `http://${API_HOST}/api/v1/`
+  baseUri = `${API_URI}/api/v1/`
   headers = {
     "Content-Type": "application/json",
     "X-User": null as string
   }
-  errorHandler = inject(ErrorHandler);
-  info = inject(InfoService);
   
-  async saveList(list: ISaveListDTO, forceSave = false)
+  errorHandler = inject(ErrorHandler);
+  info         = inject(InfoService);
+  storage      = inject(StorageService);
+  dialog       = inject(DialogService);
+  
+  readonly mode = "cors";
+  
+  async saveList(id: string, list: ISaveListDTO, forceSave = false, keepalive = false)
   {
-    let uri = `list${forceSave ? "?forceSave=true" : ""}`;
-    return await this.request(uri, {
+    let uri = `list/${id}${forceSave ? "?forceSave=true" : ""}`;
+    let key = await this.storage.getKey(id);
+    list.new = list.new == null 
+      ? null 
+      : await encryptList(list.new, key);
+      
+    let res = await this.request(uri, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(list)
-    })
+      body: JSON.stringify(list),
+      keepalive: keepalive,
+    }) as ICheckList;
+    return await decryptListWithDialog(res, {
+      storage: this.storage,
+      dialog: this.dialog
+    });
   }
   
   async getList(id: string)
   {
-    let res = await this.request(`list/${id}`);
-    return res as ICheckList;
+    let res = await this.request(`list/${id}`, {
+      method: "GET"
+    }) as ICheckList;
+    return await decryptListWithDialog(res, {
+      storage: this.storage,
+      dialog: this.dialog
+    });
   }
   
   async deleteList(id: string)
@@ -41,28 +67,48 @@ export class ApiService
     });
   }
   
+  async syncLists(dtos: Record<string, ISaveListDTO>)
+  {
+    for(let key of Object.keys(dtos))
+    {
+      let dto = dtos[key];
+      let listKey = await this.storage.getKey(key);
+      dto.new = dto.new == null 
+        ? null 
+        : await encryptList(dto.new, listKey);
+    }
+    return await this.request(`lists/sync`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(dtos)
+    });
+  }
+  
   async request(uri: string, options?: RequestInit)
   {
-    let res = await fetch(`${this.baseUri}${uri}`, {
-      ...options,
-      headers: {
-        ...(options?.headers ?? {}),
-        ...this.headers
-      },
-      mode: "cors"
-    });
-    
     let json: any = null;
+    let res: Response = null;
+    let error: Error = null;
     try
     {
+      res = await fetch(`${this.baseUri}${uri}`, {
+        ...options,
+        headers: {
+          ...(options?.headers ?? {}),
+          ...this.headers
+        },
+        mode: "cors"
+      });
       json = await res.json();
     }
     catch(err)
     {
-      
+      error = err;
     }
     
-    if(!res.ok)
+    if(!res || !res.ok)
     {
       if(json)
       {
@@ -70,8 +116,13 @@ export class ApiService
         console.error("API Error:", apiError);
         this.info.showApiError(apiError);
       }
+      return null;
     }
-    return null;
+    else if(error)
+    {
+      this.errorHandler.handleError(error);
+    }
+    return json;
   }
 }
 

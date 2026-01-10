@@ -24,18 +24,24 @@
 <h3>2.1 Data You Provide</h3>
 <p>When using the Service, you may create TODO lists and items. This may include:</p>
 <ul>
-  <li>Task titles</li>
-  <li>Task descriptions</li>
-  <li>User chosen pseudonym</li>
-  <li>Any text you voluntarily enter into a list</li>
+  <li>List titles or Item titles (encrypted)</li>
+  <li>List descriptions or Item descriptions (encrypted)</li>
+  <li>User chosen pseudonym (encrypted)</li>
 </ul>
+<p>
+  We use E2E encryption and ecrypt user pseudonyms, task titles, list titles.
+  We do <strong>not</strong> encrypt metadata such as amount of items, creation and modified timestamps.
+  We do not share any data with anyone.
+</p>
+
 <p><strong>Important:</strong> Do not store sensitive personal data (e.g., health, financial, political, or identity information) in your TODO lists.</p>
 
 <h3>2.2 System Data</h3>
-<p>The system stores only the following technical information:</p>
+<p>The system stores only the following metadata unencrypted:</p>
 <ul>
-  <li>List identifier (GUID)</li>
-  <li>Creation and modified timestamps</li>
+  <li>List keys</li>
+  <li>Creation/modified/deletion timestamps</li>
+  <li>Item state (completed / idle)</li>
 </ul>
 <p>We <strong>do not</strong> collect or store:</p>
 <ul>

@@ -29,5 +29,4 @@ public class ApiError: Exception
     }
     
     public static ApiError NotFound() => new ApiError(ErrorCode.NotFound, "Not found");
-    
 }

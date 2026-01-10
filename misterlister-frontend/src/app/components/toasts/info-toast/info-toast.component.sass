@@ -11,10 +11,16 @@
   padding: 15px
   line-height: 1.3em
   background-color: #fff
+  display: block
+  overflow: hidden
+  box-sizing: border-box
+  
   .header
     margin-bottom: 10px
     display: flex
-    justify-content: space-between
+    // justify-content: space-between
+    // align-items: center
+    font-size: 20px
     align-items: center
     mat-icon
       margin-right: 10px
@@ -69,3 +75,8 @@
 button.mat-mdc-button-base
   background-color: $white !important
   color: $black
+
+  
+@include mobile()
+  :host
+    width: 100%

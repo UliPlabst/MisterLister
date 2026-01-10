@@ -1,8 +1,9 @@
 import "./date-extensions";
-import { IServiceWorkerOptions } from "../global/db";
+import { IServiceWorkerOptions, ListEntry } from "../global/db";
 import { db } from "./constants";
-import { ErrorCode, IApiError, ISaveListDTO } from "../../src/app/types.api";
-import { API_HOST } from "../global/environment";
+import { ErrorCode, IApiError, ICheckList, ISaveListDTO } from "../../src/app/types.api";
+import { API_URI } from "../global/environment";
+import { SwRouter } from "./sw-router";
 
 declare const __PRECACHE_ASSETS__: string[];
 
@@ -30,22 +31,23 @@ db.getSwOptions().then(e => {
     swOptions = e
 });
 
+const mode = "cors";
 const isProd = process.env.NODE_ENV == "production";
 const thresholdMinutes = 0;
 const _self = self as any as ServiceWorkerGlobalScope;
 
-_self.addEventListener("sync", (event: SyncEvent) => {
-  if (event.tag === "sync-lists") {
-    const ns = nextSync["sync-lists"];
-    if(ns && new Date().getTime() < ns.getTime())
-    {
-      registerSync("sync-lists");
-      return;
-    }
-    console.log("[sw]", "syncing")
-    event.waitUntil(savePending());
-  }
-})
+// _self.addEventListener("sync", (event: SyncEvent) => {
+//   if (event.tag === "sync-lists") {
+//     const ns = nextSync["sync-lists"];
+//     if(ns && new Date().getTime() < ns.getTime())
+//     {
+//       registerSync("sync-lists");
+//       return;
+//     }
+//     console.log("[sw]", "syncing")
+//     event.waitUntil(savePending());
+//   }
+// })
 
 _self.addEventListener("install", (event) => {
   console.log("[sw] Installed");
@@ -66,57 +68,43 @@ _self.addEventListener("activate", (event) => {
   return _self.clients.claim(); // Take control of uncontrolled clients
 });
 
-_self.addEventListener("fetch", (event) => {
-  let request = event.request;
-  
-  let url = new URL(request.url);
-  let fragments = url.pathname.split("/").filter(x => x.length > 0);
-  if(url.host != API_HOST || fragments[0] != "api")
-  {
-    event.respondWith(fetch(event.request));
-    return;
-  }
-  
-  console.log(url);
-  let headers: Record<string, string> = {};
-  request.headers.forEach((v, k) => {
-    headers[k] = v;
+const swRouter = new SwRouter()
+  .on({
+    route: "/api/v1/list/:id",
+    opts: { method: "GET" },
+    fn: (event, params) =>  handleGetList(params.get("id"), event.request)
+  })
+  .on({
+    route: "/api/v1/list/:id",
+    opts: { method: "POST" },
+    fn: (event, params) => handleSaveList(params.get("id"), event.request)
+  })
+  .on({
+    route: "/api/v1/list/:id",
+    opts: { method: "DELETE" },
+    fn: (event, params) => handleDeleteList(params.get("id"), event.request)
+  })
+  .on({
+    route: "/api/v1/lists",
+    opts: { method: "POST" },
+    fn: (event, params) => handleSyncLists(event.request)
   });
-  
-  let version = fragments[1];
-  let action = fragments[2];
-  
-  //TOOD: use version
-  
-  if(action == "list" && request.method == "GET")
-  {
-    let id = fragments[3];
-    event.respondWith(handleGetList(id, request));
+
+_self.addEventListener("fetch", (event) => {
+  if(swRouter.handle(event))
     return;
-  }
-  else if(action == "list" && request.method == "POST")
-  {
-    event.respondWith(handleSaveList(request));
-    return;
-  }
-  else if(action == "list" && request.method == "DELETE")
-  {
-    let id = fragments[3];
-    event.respondWith(handleDeleteList(id, request));
-    return;
-  }
-  console.log(url.pathname);
+  console.log(event.request.url);
   console.log("[ServiceWorker] Fetching:", event.request.url);
-  event.respondWith(fetch(event.request));
-    
-    // if(fragments[1] != "v1")
-    //   throw new Error("Invalid API version");
-    
-    // let handler = getHandler(fragments[1]);
-    // let method = fragments[2];
-    
-    // let promise = handler[method](event.request, headers);
-    // event.respondWith(promise);
+  event.respondWith(fallback());
+  
+  async function fallback()
+  {
+    let cache = await caches.open("v1");
+    let res = await cache.match(event.request);
+    if(res == null)
+      res = await fetch(event.request);
+    return res;
+  }
 });
 
 _self.addEventListener("message", async (event) => {
@@ -127,21 +115,21 @@ _self.addEventListener("message", async (event) => {
   }
 });
 
-async function savePending()
-{
-  let clients = await _self.clients.matchAll();
-  let lists = await db.lists.filter(e => e.pending != null).toArray();
-  let threshold = new Date().addMinutes(thresholdMinutes);
-  for(let entry of lists.filter(e => e.pending < threshold))
-  {
-    let res = await saveList({ new: entry.new, old: entry.old, user: entry.user });
-    if(res.ok)
-    {
-      let list = res.json();
-      clients.forEach(e => e.postMessage({ type: "LIST_SYNC", list }));
-    }
-  }
-}
+// async function savePending()
+// {
+//   let clients = await _self.clients.matchAll();
+//   let lists = await db.lists.filter(e => e.pending != null).toArray();
+//   let threshold = new Date().addMinutes(thresholdMinutes);
+//   for(let entry of lists.filter(e => e.pending < threshold))
+//   {
+//     let res = await saveList({ new: entry.new, old: entry.old, user: entry.user });
+//     if(res.ok)
+//     {
+//       let list = res.json();
+//       clients.forEach(e => e.postMessage({ type: "LIST_SYNC", list }));
+//     }
+//   }
+// }
 
 async function registerSync(name: string)
 {
@@ -174,27 +162,20 @@ async function handleGetList(id: string, request: Request): Promise<Response>
     id,
     new: list,
     old: list,
-    user: null,
     pending: null
   };
   await db.lists.put(entry, id);
   return createJsonResponse(entry.new ?? entry.old);
 }
 
-async function handleSaveList(request: Request): Promise<Response>
+async function updateListEntry(id: string, newList: ICheckList): Promise<ListEntry>
 {
-  let url = new URL(request.url);
-  
-  let clone = request.clone();
-  let json = await clone.json() as ISaveListDTO;
-  
-  let entry = await db.lists.get(json.new.id);
+  let entry = await db.lists.get(id);
   if(!entry) 
   {
     entry = {
-      id: json.new.id,
-      new: json.new,
-      user: json.user,
+      id,
+      new: newList,
       old: null,
       pending: new Date()
     };
@@ -202,19 +183,50 @@ async function handleSaveList(request: Request): Promise<Response>
   }
   else
   {
-    entry.new = json.new;
-    await db.lists.update(entry.id, { new: json.new, pending: new Date() });
+    if(!newList)
+      return entry;
+    entry.new = newList;
+    await db.lists.update(id, { new: newList, pending: new Date() });
   }
+  return entry;
+}
+
+
+async function handleSaveList(id: string, request: Request): Promise<Response>
+{
+  let url = new URL(request.url);
   
+  let clone = request.clone();
+  let dto = await clone.json() as ISaveListDTO;
+  
+  let entry = await updateListEntry(id, dto.new);
+  let resultList = dto.new;
   if(url.searchParams.get("forceSave") != null && navigator.onLine)
   {
-    return saveList(json);
+    dto = {
+      ...dto,
+      old: entry.old
+    };
+    let r = await fetch(`${API_URI}/api/v1/list/${id}`, {
+      body: JSON.stringify(dto),
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      mode
+    });
+    if(r.ok)
+    {
+      resultList = await r.json();
+      await db.lists.update(entry.id, { 
+        old: resultList,
+        new: resultList,
+        pending: null
+      });
+      
+    }
   }
-  else
-  {
-    await registerSync("sync-lists");
-    return createJsonResponse(entry.new);
-  }
+  return createJsonResponse(resultList);
 }
 
 async function handleDeleteList(id: string, request: Request): Promise<Response>
@@ -231,56 +243,38 @@ async function handleDeleteList(id: string, request: Request): Promise<Response>
   return res;
 }
 
-async function saveList(dto: ISaveListDTO)
+async function handleSyncLists(request: Request): Promise<Response>
 {
-  try
+  let clone = request.clone();
+  let dtos = await clone.json() as Record<string, ISaveListDTO>;
+  let entries: ListEntry[] = [];
+  for(let id of Object.keys(dtos))
   {
-    let entry = await db.lists.get(dto.new.id);
-    if(!entry) //should not happen
-    {
-      entry = {
-        id: dto.new.id,
-        new: dto.new,
-        user: dto.user,
-        old: dto.old,
-        pending: new Date()
-      };
-      await db.lists.put(entry, entry.id);
-    }
-    dto.old = entry.old;
-    
-    let resultList = dto.new;
-    if(navigator.onLine)
-    {
-      let r = await fetch(`http://${API_HOST}/api/v1/list/${dto.new.id}`, {
-        body: JSON.stringify(dto),
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        mode: "cors"
-      });
-      if(r.status != 200)
-        return r;
-      resultList = await r.json();
-      await db.lists.update(entry.id, { 
-        old: resultList,
-        new: resultList,
-        pending: null
-      });
-    }
-    else
-    {
-      await db.lists.update(entry.id, {
-        new: dto.new,
-        pending: null
-      });
-    }
-    return createJsonResponse(resultList);
+    let dto = dtos[id];
+    let entry = await updateListEntry(id, dto.new);
+    entries.push(entry);
   }
-  catch(err)
+  
+  if(navigator.onLine)
   {
-    return createJsonResponse(dto.new);
+    let r = await fetch(`${API_URI}/api/v1/lists/sync`, {
+      body: JSON.stringify(dtos),
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      mode
+    });
+    return r;    
+  }
+  else
+  {
+    let r: Record<string, ICheckList> = {};
+    for(let e of entries)
+    {
+      r[e.id] = e.new;
+    }
+    return createJsonResponse(r);
   }
 }
 

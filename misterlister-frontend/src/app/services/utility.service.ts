@@ -6,7 +6,7 @@ import { Router } from "@angular/router";
 import { BehaviorSubject } from "rxjs";
 import { StorageService } from "./storage.service";
 import { LayoutService } from "./layout.service";
-import { DisposableCollection } from "../utils";
+import { DisposableCollection, LambdaDisposable } from "../utils";
 import { SwService } from "./sw.service";
 import { InfoService } from "./info.service";
 
@@ -17,6 +17,8 @@ export class UtilityService
 {
   user$ = new BehaviorSubject<string>(null);
   disp = new DisposableCollection();
+  private _beforeUnloadHandler: (ev: BeforeUnloadEvent) => any = null;
+  
   constructor(
     public api: ApiService,
     public dialog: DialogService,
@@ -36,10 +38,22 @@ export class UtilityService
         }
       });
       
+    window.addEventListener("beforeunload", ev => {
+      this._beforeUnloadHandler?.(ev);
+    });
+      
     let user = this.getCookies().user;
     this.user$.next(user);
     this.disp.push(d);
     (window as any).__util = this;
+  }
+  
+  registerBeforeUnloadHandler(handler: (ev: BeforeUnloadEvent) => any)
+  {
+    if(this._beforeUnloadHandler != null)  
+      throw new Error("Before unload handler already registered");
+    this._beforeUnloadHandler = handler;
+    return new LambdaDisposable(() => this._beforeUnloadHandler = null);
   }
   
   destroy()

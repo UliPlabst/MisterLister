@@ -13,7 +13,6 @@ export class EnsureUserGuard implements CanActivate
   }
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<GuardResult>
   {
-    
     let user = await this.util.ensureUser();
     return user != null ? true : false;
   }

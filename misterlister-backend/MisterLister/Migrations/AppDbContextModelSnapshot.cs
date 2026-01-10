@@ -19,7 +19,7 @@ namespace MisterLister.Migrations
 
             modelBuilder.Entity("MisterLister.Models.Database.CheckList", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("Key")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
@@ -38,8 +38,11 @@ namespace MisterLister.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Items")
+                    b.Property<string>("EncryptedKey")
                         .HasColumnType("TEXT");
+
+                    b.Property<long>("Id")
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("LastModified")
                         .HasColumnType("TEXT");
@@ -54,9 +57,84 @@ namespace MisterLister.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("Id");
+                    b.HasKey("Key");
+
+                    b.HasIndex("Key")
+                        .IsUnique();
 
                     b.ToTable("CheckLists");
+                });
+
+            modelBuilder.Entity("MisterLister.Models.Database.ListItem", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("CheckListId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime?>("CompletedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CompletedBy")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("Key")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("LastModified")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid?>("ParentItemId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("State")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CheckListId");
+
+                    b.HasIndex("Key")
+                        .IsUnique();
+
+                    b.ToTable("ListItem");
+                });
+
+            modelBuilder.Entity("MisterLister.Models.Database.ListItem", b =>
+                {
+                    b.HasOne("MisterLister.Models.Database.CheckList", "CheckList")
+                        .WithMany("Items")
+                        .HasForeignKey("CheckListId")
+                        .HasPrincipalKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CheckList");
+                });
+
+            modelBuilder.Entity("MisterLister.Models.Database.CheckList", b =>
+                {
+                    b.Navigation("Items");
                 });
 #pragma warning restore 612, 618
         }

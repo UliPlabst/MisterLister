@@ -11,6 +11,9 @@ import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { FormControl, ReactiveFormsModule } from "@angular/forms";
 import { DisposableCollection, LambdaDisposable } from "./utils";
 import { InfoToastsModule } from "./components/toasts/info-toasts.module";
+import { filter, take } from "rxjs";
+import { ISaveListDTO } from "./types.api";
+import { FileInputDirective } from "./directives/file-input.directive";
 
 @Component({
   selector: 'app-root',
@@ -22,7 +25,8 @@ import { InfoToastsModule } from "./components/toasts/info-toasts.module";
     MatSlideToggleModule,
     ReactiveFormsModule,
     CommonModule,
-    InfoToastsModule
+    InfoToastsModule,
+    FileInputDirective
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.sass'
@@ -39,7 +43,7 @@ export class AppComponent implements OnInit, OnDestroy
   {
   }
   
-  ngOnInit(): void
+  async ngOnInit()
   {
     this.sw.addTo(this._disp);
     this.autoSaveCtrl.valueChanges
@@ -47,11 +51,60 @@ export class AppComponent implements OnInit, OnDestroy
         this.sw.updateOptions({ autoSaveEnabled: e });
       })
       .addTo(this._disp);
+      
+    this.util.sw.ready$
+      .subscribe(e => {
+        // if(e == true)
+        //   this.sync();
+      });
+      
+    let installPromptDismissed = await this.util.storage.getKeyValue<boolean>("installPromptDismissed");
+    if(!installPromptDismissed)
+    {
+      if(await this.util.storage.getKeyValue<boolean>("installPromptDismissed"))
+        return;
+      setTimeout(async () => {
+        let res = await this.util.dialog.confirm(
+          "Install MisterLister App",
+          [
+            "Did you know that you can install this web app on your device for a better experience?",
+            "Installing this app will allow you to add it to your home screen and increase the storage quota limits to ensure that your data will never deleted due to storage constraints.",
+            "Installation instructions are different depending on your browser. Look for a button named 'Add to home screen' or 'Install app' in the context menu.",
+          ],
+          "Got it, don't show again",
+          "Ok"
+        );
+        if(res === true)
+          await this.util.storage.setKeyValue("installPromptDismissed", true);
+      }, 30000)
+    }
   }
   
   ngOnDestroy(): void
   {
     this._disp.dispose();
+  }
+  
+  async sync()
+  {
+    let lists = await this.util.storage.db.lists.toArray();
+    if(this.util.user$.value == null || lists.length == 0)
+      return;
+    let dtos: Record<string, ISaveListDTO> = {};
+    for(let l of lists)
+    {
+      let res: ISaveListDTO = {
+        new: l.new,
+        old: l.old,
+      };
+      dtos[l.id] = res;
+    }
+    let res = await this.util.api.syncLists(dtos);
+    if(!res)
+      return;
+    Object.keys(res).forEach(id => {
+      this.util.sw.bus.emit("listUpdate", { list: res[id] });
+    });
   }
   
   async switchUser()

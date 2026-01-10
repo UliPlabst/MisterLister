@@ -6,15 +6,38 @@ body
   font-family: Roboto
   background-color: $black
   color: $white
+  font-weight: 300
   
+.no-display
+  display: none !important
 a
   color: $primary-color
+  
+h1
+  margin-top: $margin-1
+  margin-bottom: $margin-2
+  font-weight: 400
+h2
+  font-weight: 400
+h3
+  font-weight: 400
+  
+b, strong
+  font-weight: 400
+  
+p
+  margin-top: 0
+  text-align: justify
+  line-height: 1.3em
   
 button.mat-mdc-button-base
   &:not(.mat-mdc-icon-button)
     border-radius: $border-radius !important
     mat-icon.mat-icon
       color: $white
+  &.mat-mdc-unelevated-button
+    mat-icon.mat-icon
+      color: $black
   &.size-s
     width: 24px
     height: 24px

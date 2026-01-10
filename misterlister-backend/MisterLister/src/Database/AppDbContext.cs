@@ -13,7 +13,7 @@ public class AppDbContext: DbContext
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        var dir = "./";
+        var dir = Environment.CurrentDirectory;
         optionsBuilder.UseSqlite($"Data Source={dir}/misterlister.db");
         base.OnConfiguring(optionsBuilder);
     }
@@ -26,7 +26,6 @@ public class AppDbContext: DbContext
             e.GetMethod("ConfigureModel", BindingFlags.Public | BindingFlags.Static)
                 ?.Invoke(null, [modelBuilder]);
         }
-        
     }
     
     public static IEnumerable<Type> ModelTypes() 

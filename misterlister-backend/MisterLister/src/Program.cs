@@ -24,11 +24,13 @@ public class Program
             ?? throw new Exception("Could not parse config");
 
         var services = builder.Services;
-        services.AddControllers(cfg => {
+        services
+            .AddControllers(cfg => {
                 cfg.Filters.Add<GlobalActionFilter>();
             })
-             .AddJsonOptions(options =>
+            .AddJsonOptions(options =>
             {
+                options.JsonSerializerOptions.Converters.Add(new Json.ExceptionJsonConverterFactory());
                 options.JsonSerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
                 // options.JsonSerializerOptions.DictionaryKeyPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
                 // options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;

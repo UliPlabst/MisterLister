@@ -169,6 +169,8 @@ $my-theme: mat.define-theme((
 //palette generator from http://mcg.mbitson.com/#!?mcgpalette0=%23a3c54e
 
 :root {
+  --mdc-dialog-container-shape: $border-radius
+  
   @include mat.typography-hierarchy($my-theme);
   
   @include mat.core-theme($my-theme);

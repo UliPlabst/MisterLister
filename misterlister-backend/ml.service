@@ -1,0 +1,24 @@
+[Unit]
+Description=misterlister Asp.Net backend
+After=network.target
+
+[Service]
+# Adjust the user and group under which the app should run
+User=www-data
+Group=www-data
+
+# Path to your app’s DLL
+WorkingDirectory=/home/root/misterlister/resources
+ExecStart=/home/root/misterlister/publish/MisterLister
+
+# Restart settings
+Restart=always
+RestartSec=10
+
+# Logging
+SyslogIdentifier=misterlister
+Environment=ASPNETCORE_ENVIRONMENT=Production
+Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
+
+[Install]
+WantedBy=multi-user.target

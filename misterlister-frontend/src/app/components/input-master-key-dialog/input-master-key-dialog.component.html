@@ -1,0 +1,23 @@
+<h2 mat-dialog-title>Enter Recovery Master Key</h2>
+<mat-dialog-content class="mat-typography">
+  <div class="dialog-body-wrapper">
+    <p>
+      Decryption failed. Please enter your recovery master key to restore access to your data.
+    </p>
+    <mat-form-field>
+      <mat-label>Master Key</mat-label>
+      <textarea matInput required type="password" [formControl]="ctrl" [cdkTextareaAutosize]="true"></textarea>
+      @if(ctrl.errors?.required) {
+        <mat-error>Master key is required</mat-error>
+      }
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-flat-button [mat-dialog-close]="null">
+    Cancel
+  </button>
+  <button mat-flat-button [disabled]="ctrl.invalid" color="primary" [mat-dialog-close]="ctrl.value">
+    Ok
+  </button>
+</mat-dialog-actions>

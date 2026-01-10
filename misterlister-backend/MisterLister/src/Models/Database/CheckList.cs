@@ -10,33 +10,37 @@ namespace MisterLister.Models.Database;
 
 #nullable disable
 
+[Index(nameof(Key), IsUnique = true)]
 public class CheckList
 {
-    public Guid Id { get; set; }               
+    [Key, JsonIgnore]
+    public long Id { get; set; }
+    public Guid Key { get; set; }               
     public string Name { get; set; }
     public string Description { get; set; }
-    public List<ListItem> Items { get; set; }
     public string CreatedBy { get; set; }
     public DateTime Created { get; set; }      = DateTime.UtcNow;
     public DateTime LastModified { get; set; } = DateTime.UtcNow;
     public string LastModifiedBy { get; set; }
     public DateTime? Deleted { get; set; }
     public string? DeletedBy { get; set; }
+    public string EncryptedKey { get; set; }
 
     public long RowVersion { get; set; } = 1;
 
+    public virtual List<ListItem> Items { get; set; }
 
     public static void ConfigureModel(ModelBuilder mb)
     {
         var b = mb.Entity<CheckList>();
-        b.HasKey(c => c.Id);
-        b.Property(e => e.RowVersion)
-            .IsConcurrencyToken();  
-        b.Property(e => e.Items)
-            .HasConversion(
-                v => JsonSerializer.Serialize(v, (JsonSerializerOptions?)null),
-                v => JsonSerializer.Deserialize<List<ListItem>>(v, (JsonSerializerOptions?)null) ?? new List<ListItem>()
-            );
+        b.HasKey(c => c.Key);
+        b.Property(e => e.RowVersion).IsConcurrencyToken();
+        
+        b.HasMany(e => e.Items)
+            .WithOne(e => e.CheckList)
+            .HasForeignKey(e => e.CheckListId)
+            .HasPrincipalKey(e => e.Id)
+            .OnDelete(DeleteBehavior.Cascade);
     }
     
     public void FillParentItemIds()
@@ -87,7 +91,7 @@ public class CheckList
     
     public void Merge(CheckList @new, CheckList old, InvocationContext context)
     {
-        if(@new.Id != Id)
+        if(@new.Key != Key)
             throw new ArgumentException("Cannot merge lists with different IDs");
             
         FillParentItemIds();
@@ -134,7 +138,6 @@ public class CheckList
                         {
                             var clone = h.New.Clone();
                             clone.LastModified   = context.InvocationTime;
-                            clone.LastModifiedBy = context.User;
                             clone.ParentItemId   = o.ParentItemId;
                             helper.Persisted.Items.Insert(
                                 helper.Persisted.Items.IndexOf(o) + 1,
@@ -189,11 +192,7 @@ public class CheckList
         listChanged = listChanged || r;
 
         if (listChanged)
-        {
             LastModified = context.InvocationTime;
-            LastModifiedBy = context.User;
-        }
-
         OrderItems();
     }
 }
@@ -205,8 +204,11 @@ public enum ItemState
     Deleted
 }
 
+[Index(nameof(Key), IsUnique = true)]
 public class ListItem
 {
+    [Key, JsonIgnore]
+    public long Id { get; set; }
     public Guid Key { get; set; }
     public string Name { get; set; }
     public ItemState State { get; set; }
@@ -215,13 +217,16 @@ public class ListItem
     public string? CompletedBy { get; set; }
     public DateTime LastModified { get; set; } = DateTime.UtcNow;
     public string LastModifiedBy { get; set; }
-    public DateTime CreatedAt { get; set; }      = DateTime.UtcNow;
+    public DateTime CreatedAt { get; set; }    = DateTime.UtcNow;
     public string CreatedBy { get; set; }
     public DateTime? DeletedAt { get; set; }
     public string DeletedBy { get; set; }
     
     [JsonIgnore]
     public Guid? ParentItemId { get; set; }
+    
+    public long CheckListId { get; set; }
+    public virtual CheckList CheckList { get; set; }
     
     public void SetState(ItemState state, InvocationContext context)
     {
@@ -235,14 +240,12 @@ public class ListItem
         else if(state == ItemState.Completed)
         {
             CompletedAt = context.InvocationTime;
-            CompletedBy = context.User;
             DeletedAt   = null;
             DeletedBy   = null;
         }
         else if(state == ItemState.Deleted)
         {
             DeletedAt = context.InvocationTime;
-            DeletedBy = context.User;
         }
         State = state;
     }

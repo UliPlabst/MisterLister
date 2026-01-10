@@ -20,6 +20,7 @@ export class DialogService
   {
     
   }
+  
   async confirm(
     header: string,
     bodyParagraphs: string[],

@@ -13,7 +13,8 @@
     "watch:sw": "webpack --config src/sw/webpack.config.js --watch",
     "start": "node scripts/parallel.js start:app watch:sw",
     "build:prod": "npm run build:app:prod && npm run build:sw:prod && node scripts/copy-sw.js",
-    "deploy": "gh-pages -d dist"
+    "predeploy": "node -e \"require('fs').copyFileSync('dist/index.html','dist/404.html')\"",
+    "deploy": "npm run build:prod && npm run predeploy && gh-pages -d dist --cname ml.toolyard.app"
   },
   "homepage": "https://uliplabst.github.io/misterlister",
   "private": false,
@@ -29,6 +30,7 @@
     "@angular/platform-browser-dynamic": "^19.2.0",
     "@angular/router": "^19.2.0",
     "dexie": "^4.0.11",
+    "lean-qr": "^2.7.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"
@@ -37,6 +39,7 @@
     "@angular-devkit/build-angular": "^19.2.7",
     "@angular/cli": "^19.2.7",
     "@angular/compiler-cli": "^19.2.0",
+    "gh-pages": "^6.3.0",
     "ts-loader": "^9.5.2",
     "typescript": "~5.7.2",
     "webpack": "^5.99.6",

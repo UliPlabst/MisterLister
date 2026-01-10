@@ -1,1 +1,1 @@
-export const API_HOST = "91.99.173.216";
+export const API_URI = "https://api.ml.toolyard.app";

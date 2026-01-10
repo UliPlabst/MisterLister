@@ -1,5 +1,5 @@
 export interface ICheckList {
-  id: string;
+  key: string;
   name: string;
   description: string;
   items: IListItem[];
@@ -9,6 +9,7 @@ export interface ICheckList {
   lastModifiedBy?: string;
   deleted?: string;
   deletedBy?: string;
+  encryptedKey: string;
 }
 
 export interface IListItem {
@@ -54,5 +55,4 @@ export interface ISaveListDTO
 {
   new: ICheckList;
   old?: ICheckList;
-  user: string;
 }

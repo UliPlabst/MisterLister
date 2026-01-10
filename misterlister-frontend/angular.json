@@ -51,7 +51,8 @@
           },
           "configurations": {
             "production": {
-              "baseHref": "/misterlister/",
+              "baseHref": "/",
+              "deployUrl": "/",
               "budgets": [
                 {
                   "type": "initial",

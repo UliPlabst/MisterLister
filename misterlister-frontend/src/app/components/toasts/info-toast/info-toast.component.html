@@ -1,12 +1,12 @@
 <div class="header">
-  <div class="title">{{message.message}}</div>
   <mat-icon>{{icon}}</mat-icon>
+  <span class="title">{{message.message}}</span>
 </div>
 <div class="content">{{message.details}}</div>
 <div class="buttons">
   <button mat-flat-button
     (click)="onClose()"
     >
-    Schließen
+    Close
   </button>
 </div>

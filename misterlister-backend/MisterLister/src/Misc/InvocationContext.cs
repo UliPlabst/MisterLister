@@ -1,9 +1,6 @@
 namespace MisterLister.Misc;
 
-public class InvocationContext(
-    string user
-)
+public class InvocationContext
 {
-    public string User { get; } = user;
     public DateTime InvocationTime = DateTime.UtcNow;
 }

@@ -41,6 +41,12 @@ export class InfoService
       ...this._messages$.value,
       message
     ]);
+    if(message.timeout && message.timeout > 0)
+    {
+      setTimeout(() => {
+        this.removeMessage(message);
+      }, message.timeout);
+    }
   }
   
   showMessage(

@@ -5,9 +5,16 @@
     </a>
     {{util.layout.title$ | async}}
   </div>
-  <button mat-icon-button (click)="menu.toggle()">
-    <mat-icon>menu</mat-icon>
-  </button>
+  <div class="buttons">
+    @for(button of util.layout.buttons$ | async; track button) {
+      <button mat-icon-button (click)="button.invoke($event)">
+        <mat-icon>{{button.icon}}</mat-icon>
+      </button>
+    }
+    <button mat-icon-button (click)="menu.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
 </nav>
 <app-info-toast-container></app-info-toast-container>
 <div class="body">
@@ -25,10 +32,10 @@
       <div>
         <button mat-flat-button  (click)="switchUser()">
           @if(user == null) {
-            Set pseudonym
+            Set
           }
           @else {
-            Switch pseudonym
+            Switch
           }
         </button>
       </div>
@@ -49,7 +56,7 @@
     Privacy Policy
   </a>
   <a [routerLink]="'/imprint'">
-    Impressum
+    Imprint
   </a>
   <a href="https://github.com/UliPlabst/misterlister">
     Github

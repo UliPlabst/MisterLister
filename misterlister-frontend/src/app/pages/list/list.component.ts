@@ -1,17 +1,24 @@
 import { CdkDrag, CdkDragDrop, CdkDragHandle, CdkDragPlaceholder, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
-import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { debounceTime, distinctUntilChanged, filter, fromEvent, map, Subject } from 'rxjs';
+import { combineLatest, debounceTime, distinctUntilChanged, filter, firstValueFrom, fromEvent, map, Subject, take } from 'rxjs';
 import { TogglerComponent } from 'src/app/components/toggler/toggler.component';
 import { MaterialModule } from 'src/app/material.module';
 import { PureCallPipe } from 'src/app/pipes/pureCall.pipe';
 import { UtilityService } from 'src/app/services/utility.service';
-import { ICheckList, IListItem, ItemState } from 'src/app/types.api';
-import { DisposableCollection } from 'src/app/utils';
+import { ICheckList, IListItem, ISaveListDTO, ItemState } from 'src/app/types.api';
+import { decrypt, DisposableCollection, encrypt, exportKey, importKey } from 'src/app/utils';
 import { ButtonProgressWrapperComponent } from "src/app/components/button-progress-wrapper/button-progress-wrapper.component";
 import { CommonModule } from '@angular/common';
 import { IfNullPipe } from 'src/app/pipes/ifNull.pipe';
+import { createShareUrl } from 'src/app/utils/utils.list';
+import { QrCodeDialogComponent } from 'src/app/components/qrcode-dialog/qrcode-dialog.component';
+import { CdkPortal, TemplatePortal } from '@angular/cdk/portal';
+
+export type ListComponentQP = {
+  showData?: boolean;
+}
 
 type MapEntry = {
   form: FormGroup<{
@@ -54,15 +61,19 @@ export class ListComponent implements OnInit, OnDestroy
   oldState: ICheckList = null;
   items: IListItem[] = [];
   deletedItems: IListItem[] = [];
+  private _dirty = false;
   
   private _changed = new Subject<void>();
   
   busy: "saving"|null = null;
+  key: CryptoKey = null;
+  toggleListData = false;
   
   constructor(
     public util: UtilityService,
     private _route: ActivatedRoute,
     private _changeRef: ChangeDetectorRef,
+    private _vc: ViewContainerRef,
     private _el: ElementRef<HTMLElement>,
   )
   {
@@ -71,12 +82,60 @@ export class ListComponent implements OnInit, OnDestroy
   
   async ngOnInit()
   {
+    this.util.layout.setButtons([
+      {
+        icon: "share",
+        invoke: async () => {
+          let url = await createShareUrl(this.list, { storage: this.util.storage });
+          this.util.dialog.openDialog(QrCodeDialogComponent, {
+            title: `Share TODO List ${this.list.name}`,
+            content: url,
+            buttons: [
+              {
+                label: "Share",
+                icon: "share",
+                color: "primary",
+                invoke: async (ev: MouseEvent) => {
+                  navigator.share({
+                    title: `TODO List ${this.list.name}`,
+                    text: `Check out my TODO list on MisterLister`, // Description/body text
+                    url: url
+                  });
+                }
+              }
+            ]
+          });
+        }
+      }
+    ]).addTo(this._disp);
+    
+    this.util.registerBeforeUnloadHandler(async ev => {
+      if(this._dirty)
+      {
+        let user = this.util.user$.value;
+        if(!user)
+          return;
+        let dto = await this.getSaveDTO(user);
+        this.util.api.saveList(this.list.key, dto, true, true);
+      }
+    }).addTo(this._disp);
+    
     this._route.paramMap
       .pipe(
         map(e => e.get("id")),
         distinctUntilChanged()
       )
       .subscribe(async (id) => {
+        let rmKey = false;
+        let fragment = await firstValueFrom(this._route.fragment);
+        if(fragment?.startsWith("key="))
+        {
+          let keyStr = fragment.substring(4);
+          let key = await importKey(keyStr);
+          await this.util.storage.saveKey(id, key);
+          rmKey = true;
+        }
+        
         if(id == null)
         {
           this.util.router.navigate([".."]);
@@ -89,7 +148,41 @@ export class ListComponent implements OnInit, OnDestroy
           return;
         }
         this.setList(list);
+        if(rmKey)
+          this.util.router.navigate([], { fragment: null, replaceUrl: true });
+        
+        
+        let wasMasterKeyExported = await this.util.storage.getKeyValue<boolean>(`masterKeyExported-${this.list.key}`);
+        if(!wasMasterKeyExported)
+        {
+          setTimeout(async () => {
+            if(await this.util.storage.getKeyValue<boolean>(`masterKeyExported-${this.list.key}`))
+              return;
+            
+            this.util.info.showMessage(
+              "info",
+              "Backup master key",
+              `Don't forget to backup your list master key! Your master key is stored on your device only and cannot be recovered otherwise. Every list has it's own master key!`
+            );
+          }, 10000)
+        }
       });
+      
+    this._route.queryParams
+      .subscribe((e: ListComponentQP) => {
+        let changed = false;
+        let res: any = { ...e };
+        if(e.showData)
+        {
+          this.toggleListData = true;
+          delete res.showData;
+          changed = true;
+        }
+        
+        if(changed)
+          this.util.router.navigate([], { queryParams: res, replaceUrl: true });
+      })
+      .addTo(this._disp);
       
     fromEvent(window, "focus")
       .subscribe(e => {
@@ -97,21 +190,29 @@ export class ListComponent implements OnInit, OnDestroy
       .addTo(this._disp);
       
     this.util.sw.bus.get("listUpdate")
-      .pipe(filter(e => e.list.id == this.list?.id))
+      .pipe(filter(e => e.list.key == this.list?.key))
       .subscribe(e => {
         this.setList(e.list);
+      });
+      
+    this._changed
+      .subscribe(e => {
+        this._dirty = true;
       });
       
     this._changed
       .pipe(debounceTime(5000))
       .subscribe(async e => {
         await this.save(false);
-      })
+      });
   }
   
-  ngOnDestroy(): void
+  async ngOnDestroy()
   {
+    this._changed.complete();
     this._disp.dispose();
+    if(this._dirty)
+      this.save(true);
   }
   
   setList(list: ICheckList)
@@ -147,22 +248,39 @@ export class ListComponent implements OnInit, OnDestroy
     }
   }
   
+  async exportMasterKey()
+  {
+    let key = await this.util.storage.getKey(this.list.key);
+    let masterKey = await exportKey(key);
+    navigator.clipboard.writeText(masterKey);
+    await this.util.storage.setKeyValue(`masterKeyExported-${this.list.key}`, true);
+    this.util.info.showMessage("success", "Master key copied to clipboard.", null, 2000);
+  }
+  
+  
+  async getSaveDTO(user: string): Promise<ISaveListDTO>
+  {
+    let list = {
+      ...this.list,
+      items: [
+        ...this.items,
+        ...this.deletedItems
+      ]
+    };
+    return {
+      new: list,
+      old: this.oldState,
+    };
+  }
+  
   save = async (forceSave = true) => {
     let user = await this.util.ensureUser();
     if(!user)
       return;
-    
-    this.list.items = [
-      ...this.items,
-      ...this.deletedItems
-    ];
-    
+    let dto = await this.getSaveDTO(user);
     console.log("[List]", "Save", this.list);
-    let res = await this.util.api.saveList({
-      new: this.list,
-      old: this.oldState,
-      user
-    }, forceSave);
+    let res = await this.util.api.saveList(this.list.key, dto, forceSave);
+    this._dirty = false;
     this.setList(res);
   }
   
@@ -178,7 +296,7 @@ export class ListComponent implements OnInit, OnDestroy
     );
     if(!conf)
       return;
-    await this.util.api.deleteList(this.list.id);
+    await this.util.api.deleteList(this.list.key);
     this.util.router.navigate([".."]);
   }
   
