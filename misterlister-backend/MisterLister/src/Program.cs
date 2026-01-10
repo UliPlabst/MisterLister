@@ -73,6 +73,8 @@ public class Program
         
         using(var scope = app.Services.CreateScope())
         {
+            var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+            logger.LogInformation("Applying database migrations...");
             var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
             await dbContext.Database.MigrateAsync();
         }

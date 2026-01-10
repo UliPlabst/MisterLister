@@ -1,3 +1,4 @@
+using System.ComponentModel.Design.Serialization;
 using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
@@ -15,6 +16,13 @@ public class GlobalActionFilter(
         if (context.Exception != null)
         {
             context.Result = ExceptionHandler(context, context.Exception);
+            logger.LogError(context.Exception, "Error {message} {type} in controller {controller} action {action}\nStackTrace:\n{stacktrace}", 
+                context.Exception.Message,
+                context.Exception.GetType().Name,
+                context.ActionDescriptor is ControllerActionDescriptor cad ? cad.ActionName : "",
+                context.ActionDescriptor is ControllerActionDescriptor cad2 ? cad2.ControllerName : "",
+                context.Exception.StackTrace
+            );
             context.ExceptionHandled = true;
         }
     }
@@ -25,9 +33,10 @@ public class GlobalActionFilter(
         if (!context.ModelState.IsValid)
         {
             var error = ApiError.FromException(new ApiError(ErrorCode.BadRequest, "Invalid model state"));
-            logger.LogError(error, "Error in controller {controller} action {action}", 
+            logger.LogError(error, "Error in controller {controller} action {action}\nStackTrace:\n{stacktrace}", 
                 context.ActionDescriptor is ControllerActionDescriptor cad ? cad.ActionName : "",
-                context.ActionDescriptor is ControllerActionDescriptor cad2 ? cad2.ControllerName : ""
+                context.ActionDescriptor is ControllerActionDescriptor cad2 ? cad2.ControllerName : "",
+                error.StackTrace
             );
             context.Result = new JsonResult(error) 
             { 

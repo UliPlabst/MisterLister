@@ -88,7 +88,7 @@ export class ListComponent implements OnInit, OnDestroy
         invoke: async () => {
           let url = await createShareUrl(this.list, { storage: this.util.storage });
           this.util.dialog.openDialog(QrCodeDialogComponent, {
-            title: `Share TODO List ${this.list.name}`,
+            title: `Share List ${this.list.name}`,
             content: url,
             buttons: [
               {
@@ -97,8 +97,8 @@ export class ListComponent implements OnInit, OnDestroy
                 color: "primary",
                 invoke: async (ev: MouseEvent) => {
                   navigator.share({
-                    title: `TODO List ${this.list.name}`,
-                    text: `Check out my TODO list on MisterLister`, // Description/body text
+                    title: `List ${this.list.name}`,
+                    text: `Check out my list on MisterLister`, // Description/body text
                     url: url
                   });
                 }

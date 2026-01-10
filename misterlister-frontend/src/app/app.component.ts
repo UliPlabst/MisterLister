@@ -68,7 +68,7 @@ export class AppComponent implements OnInit, OnDestroy
           "Install MisterLister App",
           [
             "Did you know that you can install this web app on your device for a better experience?",
-            "Installing this app will allow you to add it to your home screen and increase the storage quota limits to ensure that your data will never deleted due to storage constraints.",
+            "Installing this app will allow you to add it to your home screen and increase the storage quota limits to ensure that your data will never be deleted due to storage constraints.",
             "Installation instructions are different depending on your browser. Look for a button named 'Add to home screen' or 'Install app' in the context menu.",
           ],
           "Got it, don't show again",

@@ -226,6 +226,7 @@ public class ListItem
     public Guid? ParentItemId { get; set; }
     
     public long CheckListId { get; set; }
+    [JsonIgnore]
     public virtual CheckList CheckList { get; set; }
     
     public void SetState(ItemState state, InvocationContext context)
