@@ -10197,7 +10197,7 @@
       "format": "esm"
     },
     "src/app/pages/list/list.component.ts": {
-      "bytes": 28424,
+      "bytes": 28409,
       "imports": [
         {
           "path": "node_modules/@angular/cdk/fesm2022/drag-drop.mjs",
@@ -10525,7 +10525,7 @@
       "format": "esm"
     },
     "src/app/pages/privacy/privacy.component.ts": {
-      "bytes": 17130,
+      "bytes": 17105,
       "imports": [
         {
           "path": "node_modules/@angular/core/fesm2022/core.mjs",
@@ -11339,43 +11339,15 @@
       ],
       "format": "esm"
     },
-    "src/app/components/toasts/info-toast-container/info-toast-container.component.sass": {
-      "bytes": 609,
-      "imports": []
-    },
-    "src/app/pages/list/list.component.sass": {
-      "bytes": 2098,
-      "imports": []
-    },
-    "src/app/pages/home/home.component.sass": {
-      "bytes": 861,
-      "imports": []
-    },
-    "src/app/components/qrcode-dialog/qrcode-dialog.component.sass": {
-      "bytes": 150,
-      "imports": []
-    },
-    "src/app/app.component.sass": {
-      "bytes": 1118,
-      "imports": []
-    },
-    "src/app/pages/imprint/imprint.component.sass": {
-      "bytes": 44,
-      "imports": []
-    },
-    "src/app/pages/privacy/privacy.component.sass": {
-      "bytes": 44,
-      "imports": []
-    },
     "src/app/components/input-master-key-dialog/input-master-key-dialog.component.sass": {
       "bytes": 33,
       "imports": []
     },
-    "src/app/components/pick-user-dialog/pick-user-dialog.component.sass": {
-      "bytes": 33,
+    "src/app/components/toasts/info-toast-container/info-toast-container.component.sass": {
+      "bytes": 609,
       "imports": []
     },
-    "src/app/pages/about/about.component.sass": {
+    "src/app/pages/imprint/imprint.component.sass": {
       "bytes": 44,
       "imports": []
     },
@@ -11383,16 +11355,44 @@
       "bytes": 779,
       "imports": []
     },
+    "src/app/components/toggler/toggler.component.sass": {
+      "bytes": 260,
+      "imports": []
+    },
+    "src/app/pages/privacy/privacy.component.sass": {
+      "bytes": 44,
+      "imports": []
+    },
     "src/app/components/toasts/info-toast/info-toast.component.sass": {
       "bytes": 1484,
       "imports": []
     },
-    "src/app/components/slidebar/slide-bar.component.sass": {
-      "bytes": 753,
+    "src/app/pages/home/home.component.sass": {
+      "bytes": 861,
       "imports": []
     },
-    "src/app/components/toggler/toggler.component.sass": {
-      "bytes": 260,
+    "src/app/app.component.sass": {
+      "bytes": 1118,
+      "imports": []
+    },
+    "src/app/components/pick-user-dialog/pick-user-dialog.component.sass": {
+      "bytes": 33,
+      "imports": []
+    },
+    "src/app/pages/list/list.component.sass": {
+      "bytes": 2098,
+      "imports": []
+    },
+    "src/app/components/qrcode-dialog/qrcode-dialog.component.sass": {
+      "bytes": 150,
+      "imports": []
+    },
+    "src/app/pages/about/about.component.sass": {
+      "bytes": 44,
+      "imports": []
+    },
+    "src/app/components/slidebar/slide-bar.component.sass": {
+      "bytes": 753,
       "imports": []
     },
     "src/app/pages/third-party/third-party.component.sass": {
@@ -11782,7 +11782,7 @@
       },
       "bytes": 1484
     },
-    "main-26Y6ZOVR.js": {
+    "main-SLSS23S6.js": {
       "imports": [
         {
           "path": "chunk-EQDQRRRY.js",
@@ -12502,7 +12502,7 @@
           "bytesInOutput": 1682
         },
         "src/app/pages/list/list.component.ts": {
-          "bytesInOutput": 13144
+          "bytesInOutput": 13129
         },
         "src/app/utils/locale.ts": {
           "bytesInOutput": 2607
@@ -12511,7 +12511,7 @@
           "bytesInOutput": 32
         },
         "src/app/pages/privacy/privacy.component.ts": {
-          "bytesInOutput": 7478
+          "bytesInOutput": 7453
         },
         "src/app/pages/imprint/imprint.component.ts": {
           "bytesInOutput": 3169
@@ -12577,7 +12577,7 @@
           "bytesInOutput": 113
         }
       },
-      "bytes": 873255
+      "bytes": 873215
     },
     "chunk-C2DR6QYM.js": {
       "imports": [
@@ -12718,76 +12718,6 @@
       "inputs": {},
       "bytes": 1279
     },
-    "info-toast-container.component-6H27R2ZT.css": {
-      "imports": [],
-      "inputs": {
-        "src/app/components/toasts/info-toast-container/info-toast-container.component.sass": {
-          "bytesInOutput": 459
-        }
-      },
-      "bytes": 460,
-      "ng-component": true
-    },
-    "list.component-GUOCJXFU.css": {
-      "imports": [],
-      "inputs": {
-        "src/app/pages/list/list.component.sass": {
-          "bytesInOutput": 1653
-        }
-      },
-      "bytes": 1654,
-      "ng-component": true
-    },
-    "home.component-SCAHJ65P.css": {
-      "imports": [],
-      "inputs": {
-        "src/app/pages/home/home.component.sass": {
-          "bytesInOutput": 683
-        }
-      },
-      "bytes": 684,
-      "ng-component": true
-    },
-    "qrcode-dialog.component-PLPX7LBJ.css": {
-      "imports": [],
-      "inputs": {
-        "src/app/components/qrcode-dialog/qrcode-dialog.component.sass": {
-          "bytesInOutput": 121
-        }
-      },
-      "bytes": 122,
-      "ng-component": true
-    },
-    "app.component-7VQL5SAC.css": {
-      "imports": [],
-      "inputs": {
-        "src/app/app.component.sass": {
-          "bytesInOutput": 887
-        }
-      },
-      "bytes": 888,
-      "ng-component": true
-    },
-    "imprint.component-7XOM6YJD.css": {
-      "imports": [],
-      "inputs": {
-        "src/app/pages/imprint/imprint.component.sass": {
-          "bytesInOutput": 33
-        }
-      },
-      "bytes": 34,
-      "ng-component": true
-    },
-    "privacy.component-RDOCDXA4.css": {
-      "imports": [],
-      "inputs": {
-        "src/app/pages/privacy/privacy.component.sass": {
-          "bytesInOutput": 33
-        }
-      },
-      "bytes": 34,
-      "ng-component": true
-    },
     "input-master-key-dialog.component-MP42NYJ5.css": {
       "imports": [],
       "inputs": {
@@ -12798,20 +12728,20 @@
       "bytes": 27,
       "ng-component": true
     },
-    "pick-user-dialog.component-OGXSEVRI.css": {
+    "info-toast-container.component-6H27R2ZT.css": {
       "imports": [],
       "inputs": {
-        "src/app/components/pick-user-dialog/pick-user-dialog.component.sass": {
-          "bytesInOutput": 26
+        "src/app/components/toasts/info-toast-container/info-toast-container.component.sass": {
+          "bytesInOutput": 459
         }
       },
-      "bytes": 27,
+      "bytes": 460,
       "ng-component": true
     },
-    "about.component-575PEGCA.css": {
+    "imprint.component-7XOM6YJD.css": {
       "imports": [],
       "inputs": {
-        "src/app/pages/about/about.component.sass": {
+        "src/app/pages/imprint/imprint.component.sass": {
           "bytesInOutput": 33
         }
       },
@@ -12828,6 +12758,26 @@
       "bytes": 658,
       "ng-component": true
     },
+    "toggler.component-MC5MA5DA.css": {
+      "imports": [],
+      "inputs": {
+        "src/app/components/toggler/toggler.component.sass": {
+          "bytesInOutput": 196
+        }
+      },
+      "bytes": 197,
+      "ng-component": true
+    },
+    "privacy.component-RDOCDXA4.css": {
+      "imports": [],
+      "inputs": {
+        "src/app/pages/privacy/privacy.component.sass": {
+          "bytesInOutput": 33
+        }
+      },
+      "bytes": 34,
+      "ng-component": true
+    },
     "info-toast.component-V7YDSVZ3.css": {
       "imports": [],
       "inputs": {
@@ -12838,6 +12788,66 @@
       "bytes": 1140,
       "ng-component": true
     },
+    "home.component-SCAHJ65P.css": {
+      "imports": [],
+      "inputs": {
+        "src/app/pages/home/home.component.sass": {
+          "bytesInOutput": 683
+        }
+      },
+      "bytes": 684,
+      "ng-component": true
+    },
+    "app.component-7VQL5SAC.css": {
+      "imports": [],
+      "inputs": {
+        "src/app/app.component.sass": {
+          "bytesInOutput": 887
+        }
+      },
+      "bytes": 888,
+      "ng-component": true
+    },
+    "pick-user-dialog.component-OGXSEVRI.css": {
+      "imports": [],
+      "inputs": {
+        "src/app/components/pick-user-dialog/pick-user-dialog.component.sass": {
+          "bytesInOutput": 26
+        }
+      },
+      "bytes": 27,
+      "ng-component": true
+    },
+    "list.component-GUOCJXFU.css": {
+      "imports": [],
+      "inputs": {
+        "src/app/pages/list/list.component.sass": {
+          "bytesInOutput": 1653
+        }
+      },
+      "bytes": 1654,
+      "ng-component": true
+    },
+    "qrcode-dialog.component-PLPX7LBJ.css": {
+      "imports": [],
+      "inputs": {
+        "src/app/components/qrcode-dialog/qrcode-dialog.component.sass": {
+          "bytesInOutput": 121
+        }
+      },
+      "bytes": 122,
+      "ng-component": true
+    },
+    "about.component-575PEGCA.css": {
+      "imports": [],
+      "inputs": {
+        "src/app/pages/about/about.component.sass": {
+          "bytesInOutput": 33
+        }
+      },
+      "bytes": 34,
+      "ng-component": true
+    },
     "slide-bar.component-CSVTKMT5.css": {
       "imports": [],
       "inputs": {
@@ -12846,16 +12856,6 @@
         }
       },
       "bytes": 574,
-      "ng-component": true
-    },
-    "toggler.component-MC5MA5DA.css": {
-      "imports": [],
-      "inputs": {
-        "src/app/components/toggler/toggler.component.sass": {
-          "bytesInOutput": 196
-        }
-      },
-      "bytes": 197,
       "ng-component": true
     },
     "third-party.component-PFMS3POE.css": {
