@@ -9097,7 +9097,7 @@
       "format": "esm"
     },
     "src/app/utils.ts": {
-      "bytes": 6013,
+      "bytes": 6150,
       "imports": [
         {
           "path": "@angular/common/http",
@@ -9117,8 +9117,19 @@
       "imports": [],
       "format": "esm"
     },
+    "src/app/types.ts": {
+      "bytes": 864,
+      "imports": [
+        {
+          "path": "./types.api",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
     "src/app/types.api.ts": {
-      "bytes": 947,
+      "bytes": 935,
       "imports": [],
       "format": "esm"
     },
@@ -9194,12 +9205,17 @@
       "format": "esm"
     },
     "src/app/utils/utils.list.ts": {
-      "bytes": 3851,
+      "bytes": 6880,
       "imports": [
         {
           "path": "node_modules/rxjs/dist/esm/index.js",
           "kind": "import-statement",
           "original": "rxjs"
+        },
+        {
+          "path": "src/app/components/input-master-key-dialog/input-master-key-dialog.component.ts",
+          "kind": "import-statement",
+          "original": "../components/input-master-key-dialog/input-master-key-dialog.component"
         },
         {
           "path": "../services/dialog.service",
@@ -9212,6 +9228,11 @@
           "external": true
         },
         {
+          "path": "../types",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
           "path": "../types.api",
           "kind": "import-statement",
           "external": true
@@ -9220,11 +9241,6 @@
           "path": "src/app/utils.ts",
           "kind": "import-statement",
           "original": "../utils"
-        },
-        {
-          "path": "src/app/components/input-master-key-dialog/input-master-key-dialog.component.ts",
-          "kind": "import-statement",
-          "original": "../components/input-master-key-dialog/input-master-key-dialog.component"
         },
         {
           "path": "<runtime>",
@@ -9380,7 +9396,7 @@
       "format": "esm"
     },
     "src/app/services/storage.service.ts": {
-      "bytes": 1183,
+      "bytes": 1305,
       "imports": [
         {
           "path": "@angular/core",
@@ -9406,7 +9422,7 @@
       "format": "esm"
     },
     "src/app/services/api.service.ts": {
-      "bytes": 4318,
+      "bytes": 5616,
       "imports": [
         {
           "path": "node_modules/@angular/core/fesm2022/core.mjs",
@@ -9414,29 +9430,19 @@
           "original": "@angular/core"
         },
         {
-          "path": "rxjs",
-          "kind": "import-statement",
-          "external": true
-        },
-        {
           "path": "src/global/environment.ts",
           "kind": "import-statement",
           "original": "src/global/environment"
         },
         {
-          "path": "../components/input-master-key-dialog/input-master-key-dialog.component",
+          "path": "src/app/types.ts",
           "kind": "import-statement",
-          "external": true
+          "original": "../types"
         },
         {
           "path": "src/app/types.api.ts",
           "kind": "import-statement",
           "original": "../types.api"
-        },
-        {
-          "path": "../utils",
-          "kind": "import-statement",
-          "external": true
         },
         {
           "path": "src/app/utils/utils.list.ts",
@@ -9472,7 +9478,7 @@
       "format": "esm"
     },
     "src/app/services/layout.service.ts": {
-      "bytes": 1133,
+      "bytes": 1703,
       "imports": [
         {
           "path": "@angular/core",
@@ -9493,6 +9499,11 @@
           "path": "node_modules/@angular/core/fesm2022/core.mjs",
           "kind": "import-statement",
           "original": "@angular/core"
+        },
+        {
+          "path": "<runtime>",
+          "kind": "import-statement",
+          "external": true
         }
       ],
       "format": "esm"
@@ -9514,7 +9525,7 @@
       "format": "esm"
     },
     "src/app/services/sw.service.ts": {
-      "bytes": 2737,
+      "bytes": 3114,
       "imports": [
         {
           "path": "node_modules/@angular/core/fesm2022/core.mjs",
@@ -9522,9 +9533,9 @@
           "original": "@angular/core"
         },
         {
-          "path": "./storage.service",
+          "path": "node_modules/rxjs/dist/esm/index.js",
           "kind": "import-statement",
-          "external": true
+          "original": "rxjs"
         },
         {
           "path": "src/global/db",
@@ -9532,19 +9543,14 @@
           "external": true
         },
         {
-          "path": "node_modules/rxjs/dist/esm/index.js",
-          "kind": "import-statement",
-          "original": "rxjs"
-        },
-        {
-          "path": "src/app/utils.ts",
-          "kind": "import-statement",
-          "original": "../utils"
-        },
-        {
           "path": "src/app/misc/EventBus.ts",
           "kind": "import-statement",
           "original": "../misc/EventBus"
+        },
+        {
+          "path": "../types",
+          "kind": "import-statement",
+          "external": true
         },
         {
           "path": "../types.api",
@@ -9552,9 +9558,24 @@
           "external": true
         },
         {
+          "path": "src/app/utils.ts",
+          "kind": "import-statement",
+          "original": "../utils"
+        },
+        {
+          "path": "src/app/utils/utils.list.ts",
+          "kind": "import-statement",
+          "original": "../utils/utils.list"
+        },
+        {
           "path": "src/app/services/info.service.ts",
           "kind": "import-statement",
           "original": "./info.service"
+        },
+        {
+          "path": "./storage.service",
+          "kind": "import-statement",
+          "external": true
         },
         {
           "path": "node_modules/@angular/core/fesm2022/core.mjs",
@@ -9575,7 +9596,7 @@
       "format": "esm"
     },
     "src/app/services/utility.service.ts": {
-      "bytes": 3681,
+      "bytes": 3691,
       "imports": [
         {
           "path": "@angular/core",
@@ -9759,7 +9780,7 @@
       "format": "esm"
     },
     "src/app/pages/home/home.component.ts": {
-      "bytes": 13282,
+      "bytes": 13625,
       "imports": [
         {
           "path": "@angular/core",
@@ -9820,6 +9841,11 @@
           "path": "src/app/directives/file-input.directive.ts",
           "kind": "import-statement",
           "original": "src/app/directives/file-input.directive"
+        },
+        {
+          "path": "src/app/types",
+          "kind": "import-statement",
+          "external": true
         },
         {
           "path": "node_modules/@angular/core/fesm2022/core.mjs",
@@ -9975,42 +10001,6 @@
       ],
       "format": "esm"
     },
-    "src/app/components/toggler/toggler.component.ts": {
-      "bytes": 2764,
-      "imports": [
-        {
-          "path": "@angular/core",
-          "kind": "import-statement",
-          "external": true
-        },
-        {
-          "path": "node_modules/@angular/material/fesm2022/core.mjs",
-          "kind": "import-statement",
-          "original": "@angular/material/core"
-        },
-        {
-          "path": "node_modules/@angular/material/fesm2022/icon.mjs",
-          "kind": "import-statement",
-          "original": "@angular/material/icon"
-        },
-        {
-          "path": "node_modules/@angular/core/fesm2022/core.mjs",
-          "kind": "import-statement",
-          "original": "@angular/core"
-        },
-        {
-          "path": "node_modules/@angular/material/fesm2022/icon.mjs",
-          "kind": "import-statement",
-          "original": "@angular/material/icon"
-        },
-        {
-          "path": "node_modules/@angular/material/fesm2022/core.mjs",
-          "kind": "import-statement",
-          "original": "@angular/material/core"
-        }
-      ],
-      "format": "esm"
-    },
     "node_modules/@angular/material/fesm2022/progress-spinner.mjs": {
       "bytes": 14759,
       "imports": [
@@ -10113,22 +10103,6 @@
       ],
       "format": "esm"
     },
-    "src/app/pipes/ifNull.pipe.ts": {
-      "bytes": 466,
-      "imports": [
-        {
-          "path": "@angular/core",
-          "kind": "import-statement",
-          "external": true
-        },
-        {
-          "path": "node_modules/@angular/core/fesm2022/core.mjs",
-          "kind": "import-statement",
-          "original": "@angular/core"
-        }
-      ],
-      "format": "esm"
-    },
     "node_modules/lean-qr/index.mjs": {
       "bytes": 11270,
       "imports": [
@@ -10196,13 +10170,70 @@
       ],
       "format": "esm"
     },
+    "src/app/components/toggler/toggler.component.ts": {
+      "bytes": 3117,
+      "imports": [
+        {
+          "path": "node_modules/@angular/core/fesm2022/core.mjs",
+          "kind": "import-statement",
+          "original": "@angular/core"
+        },
+        {
+          "path": "node_modules/@angular/material/fesm2022/core.mjs",
+          "kind": "import-statement",
+          "original": "@angular/material/core"
+        },
+        {
+          "path": "node_modules/@angular/material/fesm2022/icon.mjs",
+          "kind": "import-statement",
+          "original": "@angular/material/icon"
+        },
+        {
+          "path": "node_modules/@angular/core/fesm2022/core.mjs",
+          "kind": "import-statement",
+          "original": "@angular/core"
+        },
+        {
+          "path": "node_modules/@angular/material/fesm2022/icon.mjs",
+          "kind": "import-statement",
+          "original": "@angular/material/icon"
+        },
+        {
+          "path": "node_modules/@angular/material/fesm2022/core.mjs",
+          "kind": "import-statement",
+          "original": "@angular/material/core"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/app/pipes/ifNull.pipe.ts": {
+      "bytes": 466,
+      "imports": [
+        {
+          "path": "@angular/core",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node_modules/@angular/core/fesm2022/core.mjs",
+          "kind": "import-statement",
+          "original": "@angular/core"
+        }
+      ],
+      "format": "esm"
+    },
     "src/app/pages/list/list.component.ts": {
-      "bytes": 28409,
+      "bytes": 29808,
       "imports": [
         {
           "path": "node_modules/@angular/cdk/fesm2022/drag-drop.mjs",
           "kind": "import-statement",
           "original": "@angular/cdk/drag-drop"
+        },
+        {
+          "path": "node_modules/@angular/common/fesm2022/common.mjs",
+          "kind": "import-statement",
+          "original": "@angular/common"
         },
         {
           "path": "@angular/core",
@@ -10225,6 +10256,16 @@
           "original": "rxjs"
         },
         {
+          "path": "src/app/components/button-progress-wrapper/button-progress-wrapper.component.ts",
+          "kind": "import-statement",
+          "original": "src/app/components/button-progress-wrapper/button-progress-wrapper.component"
+        },
+        {
+          "path": "src/app/components/qrcode-dialog/qrcode-dialog.component.ts",
+          "kind": "import-statement",
+          "original": "src/app/components/qrcode-dialog/qrcode-dialog.component"
+        },
+        {
           "path": "src/app/components/toggler/toggler.component.ts",
           "kind": "import-statement",
           "original": "src/app/components/toggler/toggler.component"
@@ -10233,6 +10274,11 @@
           "path": "src/app/material.module.ts",
           "kind": "import-statement",
           "original": "src/app/material.module"
+        },
+        {
+          "path": "src/app/pipes/ifNull.pipe.ts",
+          "kind": "import-statement",
+          "original": "src/app/pipes/ifNull.pipe"
         },
         {
           "path": "src/app/pipes/pureCall.pipe.ts",
@@ -10245,6 +10291,11 @@
           "external": true
         },
         {
+          "path": "src/app/types.ts",
+          "kind": "import-statement",
+          "original": "src/app/types"
+        },
+        {
           "path": "src/app/types.api.ts",
           "kind": "import-statement",
           "original": "src/app/types.api"
@@ -10255,34 +10306,9 @@
           "original": "src/app/utils"
         },
         {
-          "path": "src/app/components/button-progress-wrapper/button-progress-wrapper.component.ts",
-          "kind": "import-statement",
-          "original": "src/app/components/button-progress-wrapper/button-progress-wrapper.component"
-        },
-        {
-          "path": "node_modules/@angular/common/fesm2022/common.mjs",
-          "kind": "import-statement",
-          "original": "@angular/common"
-        },
-        {
-          "path": "src/app/pipes/ifNull.pipe.ts",
-          "kind": "import-statement",
-          "original": "src/app/pipes/ifNull.pipe"
-        },
-        {
           "path": "src/app/utils/utils.list.ts",
           "kind": "import-statement",
           "original": "src/app/utils/utils.list"
-        },
-        {
-          "path": "src/app/components/qrcode-dialog/qrcode-dialog.component.ts",
-          "kind": "import-statement",
-          "original": "src/app/components/qrcode-dialog/qrcode-dialog.component"
-        },
-        {
-          "path": "@angular/cdk/portal",
-          "kind": "import-statement",
-          "external": true
         },
         {
           "path": "node_modules/@angular/core/fesm2022/core.mjs",
@@ -10860,7 +10886,7 @@
       "format": "esm"
     },
     "src/app/extensions/array-extensions.ts": {
-      "bytes": 4882,
+      "bytes": 5031,
       "imports": [],
       "format": "esm"
     },
@@ -11168,7 +11194,7 @@
       "format": "esm"
     },
     "src/app/app.component.ts": {
-      "bytes": 11021,
+      "bytes": 11467,
       "imports": [
         {
           "path": "src/app/extensions/extensions.ts",
@@ -11247,6 +11273,11 @@
         },
         {
           "path": "./directives/file-input.directive",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "./services/api.service",
           "kind": "import-statement",
           "external": true
         },
@@ -11339,18 +11370,6 @@
       ],
       "format": "esm"
     },
-    "src/app/components/input-master-key-dialog/input-master-key-dialog.component.sass": {
-      "bytes": 33,
-      "imports": []
-    },
-    "src/app/components/toggler/toggler.component.sass": {
-      "bytes": 260,
-      "imports": []
-    },
-    "src/app/components/button-progress-wrapper/button-progress-wrapper.component.sass": {
-      "bytes": 779,
-      "imports": []
-    },
     "src/app/components/toasts/info-toast-container/info-toast-container.component.sass": {
       "bytes": 609,
       "imports": []
@@ -11359,16 +11378,16 @@
       "bytes": 33,
       "imports": []
     },
-    "src/app/app.component.sass": {
-      "bytes": 1118,
+    "src/app/pages/about/about.component.sass": {
+      "bytes": 44,
       "imports": []
     },
-    "src/app/pages/list/list.component.sass": {
-      "bytes": 2098,
+    "src/app/components/toasts/info-toast/info-toast.component.sass": {
+      "bytes": 1484,
       "imports": []
     },
-    "src/app/pages/home/home.component.sass": {
-      "bytes": 861,
+    "src/app/components/slidebar/slide-bar.component.sass": {
+      "bytes": 753,
       "imports": []
     },
     "src/app/pages/privacy/privacy.component.sass": {
@@ -11379,24 +11398,36 @@
       "bytes": 84,
       "imports": []
     },
-    "src/app/components/toasts/info-toast/info-toast.component.sass": {
-      "bytes": 1484,
+    "src/app/components/input-master-key-dialog/input-master-key-dialog.component.sass": {
+      "bytes": 33,
       "imports": []
     },
-    "src/app/pages/about/about.component.sass": {
-      "bytes": 44,
-      "imports": []
-    },
-    "src/app/components/qrcode-dialog/qrcode-dialog.component.sass": {
-      "bytes": 150,
+    "src/app/pages/home/home.component.sass": {
+      "bytes": 861,
       "imports": []
     },
     "src/app/pages/imprint/imprint.component.sass": {
       "bytes": 44,
       "imports": []
     },
-    "src/app/components/slidebar/slide-bar.component.sass": {
-      "bytes": 753,
+    "src/app/components/toggler/toggler.component.sass": {
+      "bytes": 279,
+      "imports": []
+    },
+    "src/app/app.component.sass": {
+      "bytes": 1175,
+      "imports": []
+    },
+    "src/app/components/button-progress-wrapper/button-progress-wrapper.component.sass": {
+      "bytes": 779,
+      "imports": []
+    },
+    "src/app/components/qrcode-dialog/qrcode-dialog.component.sass": {
+      "bytes": 150,
+      "imports": []
+    },
+    "src/app/pages/list/list.component.sass": {
+      "bytes": 2142,
       "imports": []
     },
     "node_modules/zone.js/fesm2015/zone.js": {
@@ -11415,7 +11446,7 @@
       "format": "esm"
     },
     "src/styles/custom-theme.scss": {
-      "bytes": 26418,
+      "bytes": 27342,
       "imports": []
     },
     "angular:css-resource:public\\fonts\\Roboto-300-cyrillic-ext.woff2": {
@@ -11507,7 +11538,7 @@
       "imports": []
     },
     "src/styles/styles.sass": {
-      "bytes": 8942,
+      "bytes": 8982,
       "imports": [
         {
           "path": "angular:css-resource:public\\fonts\\Roboto-300-cyrillic-ext.woff2",
@@ -11782,7 +11813,7 @@
       },
       "bytes": 1484
     },
-    "main-A57G7ID6.js": {
+    "main-B76ZVC7L.js": {
       "imports": [
         {
           "path": "chunk-EQDQRRRY.js",
@@ -12376,7 +12407,7 @@
           "bytesInOutput": 5320
         },
         "node_modules/@angular/cdk/fesm2022/overlay-module-d3a6e2de.mjs": {
-          "bytesInOutput": 33902
+          "bytesInOutput": 33904
         },
         "node_modules/@angular/cdk/fesm2022/dialog.mjs": {
           "bytesInOutput": 10415
@@ -12421,10 +12452,13 @@
           "bytesInOutput": 1249
         },
         "src/app/utils.ts": {
-          "bytesInOutput": 2358
+          "bytesInOutput": 2400
         },
         "src/global/environment.ts": {
           "bytesInOutput": 37
+        },
+        "src/app/types.ts": {
+          "bytesInOutput": 50
         },
         "src/app/types.api.ts": {
           "bytesInOutput": 97
@@ -12433,7 +12467,7 @@
           "bytesInOutput": 1379
         },
         "src/app/utils/utils.list.ts": {
-          "bytesInOutput": 1561
+          "bytesInOutput": 3378
         },
         "src/app/components/confirm-dialog/confirm-dialog.component.ts": {
           "bytesInOutput": 1804
@@ -12451,19 +12485,19 @@
           "bytesInOutput": 402
         },
         "src/app/services/storage.service.ts": {
-          "bytesInOutput": 686
+          "bytesInOutput": 766
         },
         "src/app/services/api.service.ts": {
-          "bytesInOutput": 1676
+          "bytesInOutput": 2361
         },
         "src/app/services/layout.service.ts": {
-          "bytesInOutput": 414
+          "bytesInOutput": 610
         },
         "src/app/misc/EventBus.ts": {
           "bytesInOutput": 211
         },
         "src/app/services/sw.service.ts": {
-          "bytesInOutput": 1249
+          "bytesInOutput": 1371
         },
         "src/app/services/utility.service.ts": {
           "bytesInOutput": 1412
@@ -12478,13 +12512,10 @@
           "bytesInOutput": 1004
         },
         "src/app/pages/home/home.component.ts": {
-          "bytesInOutput": 6439
+          "bytesInOutput": 6578
         },
         "node_modules/@angular/cdk/fesm2022/drag-drop.mjs": {
           "bytesInOutput": 55072
-        },
-        "src/app/components/toggler/toggler.component.ts": {
-          "bytesInOutput": 1128
         },
         "node_modules/@angular/material/fesm2022/progress-spinner.mjs": {
           "bytesInOutput": 8504
@@ -12492,17 +12523,20 @@
         "src/app/components/button-progress-wrapper/button-progress-wrapper.component.ts": {
           "bytesInOutput": 1966
         },
-        "src/app/pipes/ifNull.pipe.ts": {
-          "bytesInOutput": 143
-        },
         "node_modules/lean-qr/index.mjs": {
           "bytesInOutput": 7064
         },
         "src/app/components/qrcode-dialog/qrcode-dialog.component.ts": {
           "bytesInOutput": 1682
         },
+        "src/app/components/toggler/toggler.component.ts": {
+          "bytesInOutput": 1300
+        },
+        "src/app/pipes/ifNull.pipe.ts": {
+          "bytesInOutput": 143
+        },
         "src/app/pages/list/list.component.ts": {
-          "bytesInOutput": 13129
+          "bytesInOutput": 13565
         },
         "src/app/utils/locale.ts": {
           "bytesInOutput": 2607
@@ -12547,7 +12581,7 @@
           "bytesInOutput": 165
         },
         "src/app/extensions/array-extensions.ts": {
-          "bytesInOutput": 2143
+          "bytesInOutput": 2021
         },
         "src/app/components/slidebar/slide-bar.component.ts": {
           "bytesInOutput": 1391
@@ -12571,13 +12605,13 @@
           "bytesInOutput": 1391
         },
         "src/app/app.component.ts": {
-          "bytesInOutput": 4885
+          "bytesInOutput": 4498
         },
         "src/main.ts": {
           "bytesInOutput": 113
         }
       },
-      "bytes": 873383
+      "bytes": 876615
     },
     "chunk-C2DR6QYM.js": {
       "imports": [
@@ -12718,36 +12752,6 @@
       "inputs": {},
       "bytes": 1279
     },
-    "input-master-key-dialog.component-MP42NYJ5.css": {
-      "imports": [],
-      "inputs": {
-        "src/app/components/input-master-key-dialog/input-master-key-dialog.component.sass": {
-          "bytesInOutput": 26
-        }
-      },
-      "bytes": 27,
-      "ng-component": true
-    },
-    "toggler.component-MC5MA5DA.css": {
-      "imports": [],
-      "inputs": {
-        "src/app/components/toggler/toggler.component.sass": {
-          "bytesInOutput": 196
-        }
-      },
-      "bytes": 197,
-      "ng-component": true
-    },
-    "button-progress-wrapper.component-725K5UWR.css": {
-      "imports": [],
-      "inputs": {
-        "src/app/components/button-progress-wrapper/button-progress-wrapper.component.sass": {
-          "bytesInOutput": 657
-        }
-      },
-      "bytes": 658,
-      "ng-component": true
-    },
     "info-toast-container.component-6H27R2ZT.css": {
       "imports": [],
       "inputs": {
@@ -12768,34 +12772,34 @@
       "bytes": 27,
       "ng-component": true
     },
-    "app.component-7VQL5SAC.css": {
+    "about.component-575PEGCA.css": {
       "imports": [],
       "inputs": {
-        "src/app/app.component.sass": {
-          "bytesInOutput": 887
+        "src/app/pages/about/about.component.sass": {
+          "bytesInOutput": 33
         }
       },
-      "bytes": 888,
+      "bytes": 34,
       "ng-component": true
     },
-    "list.component-GUOCJXFU.css": {
+    "info-toast.component-V7YDSVZ3.css": {
       "imports": [],
       "inputs": {
-        "src/app/pages/list/list.component.sass": {
-          "bytesInOutput": 1653
+        "src/app/components/toasts/info-toast/info-toast.component.sass": {
+          "bytesInOutput": 1139
         }
       },
-      "bytes": 1654,
+      "bytes": 1140,
       "ng-component": true
     },
-    "home.component-SCAHJ65P.css": {
+    "slide-bar.component-CSVTKMT5.css": {
       "imports": [],
       "inputs": {
-        "src/app/pages/home/home.component.sass": {
-          "bytesInOutput": 683
+        "src/app/components/slidebar/slide-bar.component.sass": {
+          "bytesInOutput": 573
         }
       },
-      "bytes": 684,
+      "bytes": 574,
       "ng-component": true
     },
     "privacy.component-RDOCDXA4.css": {
@@ -12818,34 +12822,24 @@
       "bytes": 65,
       "ng-component": true
     },
-    "info-toast.component-V7YDSVZ3.css": {
+    "input-master-key-dialog.component-MP42NYJ5.css": {
       "imports": [],
       "inputs": {
-        "src/app/components/toasts/info-toast/info-toast.component.sass": {
-          "bytesInOutput": 1139
+        "src/app/components/input-master-key-dialog/input-master-key-dialog.component.sass": {
+          "bytesInOutput": 26
         }
       },
-      "bytes": 1140,
+      "bytes": 27,
       "ng-component": true
     },
-    "about.component-575PEGCA.css": {
+    "home.component-SCAHJ65P.css": {
       "imports": [],
       "inputs": {
-        "src/app/pages/about/about.component.sass": {
-          "bytesInOutput": 33
+        "src/app/pages/home/home.component.sass": {
+          "bytesInOutput": 683
         }
       },
-      "bytes": 34,
-      "ng-component": true
-    },
-    "qrcode-dialog.component-PLPX7LBJ.css": {
-      "imports": [],
-      "inputs": {
-        "src/app/components/qrcode-dialog/qrcode-dialog.component.sass": {
-          "bytesInOutput": 121
-        }
-      },
-      "bytes": 122,
+      "bytes": 684,
       "ng-component": true
     },
     "imprint.component-7XOM6YJD.css": {
@@ -12858,14 +12852,54 @@
       "bytes": 34,
       "ng-component": true
     },
-    "slide-bar.component-CSVTKMT5.css": {
+    "toggler.component-F3E4PUDC.css": {
       "imports": [],
       "inputs": {
-        "src/app/components/slidebar/slide-bar.component.sass": {
-          "bytesInOutput": 573
+        "src/app/components/toggler/toggler.component.sass": {
+          "bytesInOutput": 216
         }
       },
-      "bytes": 574,
+      "bytes": 217,
+      "ng-component": true
+    },
+    "app.component-ZJSRUCUS.css": {
+      "imports": [],
+      "inputs": {
+        "src/app/app.component.sass": {
+          "bytesInOutput": 928
+        }
+      },
+      "bytes": 929,
+      "ng-component": true
+    },
+    "button-progress-wrapper.component-725K5UWR.css": {
+      "imports": [],
+      "inputs": {
+        "src/app/components/button-progress-wrapper/button-progress-wrapper.component.sass": {
+          "bytesInOutput": 657
+        }
+      },
+      "bytes": 658,
+      "ng-component": true
+    },
+    "qrcode-dialog.component-PLPX7LBJ.css": {
+      "imports": [],
+      "inputs": {
+        "src/app/components/qrcode-dialog/qrcode-dialog.component.sass": {
+          "bytesInOutput": 121
+        }
+      },
+      "bytes": 122,
+      "ng-component": true
+    },
+    "list.component-UGTMJCPD.css": {
+      "imports": [],
+      "inputs": {
+        "src/app/pages/list/list.component.sass": {
+          "bytesInOutput": 1682
+        }
+      },
+      "bytes": 1683,
       "ng-component": true
     },
     "polyfills-FFHMD2TL.js": {
@@ -13102,7 +13136,7 @@
       },
       "bytes": 128352
     },
-    "styles-4L7QGJ2E.css": {
+    "styles-V2E3ENYI.css": {
       "imports": [
         {
           "path": "media/Roboto-300-cyrillic-ext-62NEIJRY.woff2",
@@ -13196,16 +13230,16 @@
       "entryPoint": "angular:styles/global:styles",
       "inputs": {
         "src/styles/custom-theme.scss": {
-          "bytesInOutput": 24740
+          "bytesInOutput": 25664
         },
         "src/styles/styles.sass": {
-          "bytesInOutput": 7484
+          "bytesInOutput": 7524
         },
         "angular:styles/global:styles": {
           "bytesInOutput": 0
         }
       },
-      "bytes": 32225
+      "bytes": 33189
     }
   }
 }
