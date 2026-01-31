@@ -1,7 +1,11 @@
 @use "src/styles/variables" as *
 
 :host
-  display: block
+  display: flex
+  flex-direction: column
+  flex-shrink: 0
+  height: 100%
+  flex-grow: 1
   ::ng-deep
     app-toggler
       .header
@@ -10,6 +14,10 @@
         padding: 0 $margin-2
         margin-top: 0
     
+    
+.scroll-container
+  flex: 1 1 auto
+  overflow-y: auto
     
 hr
   border-bottom: 1px dashed $primary-color
@@ -34,17 +42,13 @@ hr
   
   
 .list-items
-  margin-top: $margin-4
   display: flex
   flex-direction: column
   row-gap: $margin-4
   margin-bottom: $margin-4
   
-.list-item
-  display: flex
-  
 .list-items 
-  border: solid 1px #ccc
+  // border: solid 1px #ccc
   display: block
   border-radius: 4px
   overflow: hidden
@@ -53,9 +57,9 @@ hr
       transition: transform 250ms cubic-bezier(0, 0, 0.2, 1)
 
 .list-item 
-  padding: $margin-4
+  padding: $margin-2 0
   box-sizing: border-box
-  border-bottom: solid 1px #ccc
+  // border-bottom: solid 1px #ccc
   display: flex
   flex-direction: row
   align-items: center
@@ -89,14 +93,20 @@ hr
   box-sizing: border-box
   border-radius: 4px
   box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12)
-  border: 1px solid $white
+  // border: 1px solid $white
   overflow: hidden
   
 .cdk-drag-animating 
-  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1)
+  transition: transform 150ms cubic-bezier(0, 0, 0.2, 1)
 
 .item-placeholder 
-  background: lighten($black, 20%)
-  border: dotted 3px #999
-  min-height: 45px
-  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1)
+  // background: lighten($black, 20%)
+  // border: dotted 3px #999
+  min-height: 46px
+  transition: transform 150ms cubic-bezier(0, 0, 0.2, 1)
+
+.deleted-items
+  background-color: $black
+  &.sticky
+    position: sticky
+    bottom: 0

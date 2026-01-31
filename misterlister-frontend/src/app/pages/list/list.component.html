@@ -22,8 +22,7 @@
     </div>
   </app-toggler>
   <hr/>
-  <app-toggler [toggled]="true">
-    <span toggler-label>Items ({{items.length}})</span>
+  <app-toggler [toggled]="true" #itemToggler>
     <div class="buttons">
       <div class="left">
         <button mat-flat-button (click)="insertItem()">
@@ -43,54 +42,64 @@
         </button>
       </div>
     </div>
-    @if(items.length > 0)
-    {
+    <span toggler-label>Items ({{items.length}})</span>
+  </app-toggler>
+  <div class="scroll-container">
+    @if(itemToggler.toggled && items.length > 0) {
       <div cdkDropList class="list-items" (cdkDropListDropped)="drop($event)" [cdkDropListLockAxis]="'y'">
-        @for (item of items; track item) {
+        @for (item of items; track item.key; let i=$index) {
           <div class="list-item" cdkDrag 
             [cdkDragData]="item"
             [id]="'item-'+item.key" 
             [class.checked]="item.state == ItemState.Completed"
           >
             <div class="item-placeholder" *cdkDragPlaceholder></div>
+            <button mat-icon-button cdkDragHandle>
+              <mat-icon>drag_indicator</mat-icon>
+            </button>
             @let ctrl = item | pureCall: getCtrl;
             <mat-checkbox [formControl]="ctrl.controls.completed">
             </mat-checkbox>
             <input class="name-input" matInput [formControl]="ctrl.controls.name" (keydown)="onItemKeydown(item, $event)"/>
-            <button mat-icon-button class="delete-btn">
-              <mat-icon (click)="removeItem(item)">delete</mat-icon>
-            </button>
-            <button mat-icon-button cdkDragHandle>
-              <mat-icon>drag_handle</mat-icon>
-            </button>
+            @if(items.length > 1) {
+              <button mat-icon-button class="delete-btn">
+                <mat-icon (click)="removeItem(item)">clear</mat-icon>
+              </button>
+            }
+            
           </div>
         }
       </div>
-      
     }
-  </app-toggler>
-  <hr/>
-  <app-toggler [toggled]="false">
-    <span toggler-label>Deleted items ({{deletedItems.length}})</span>
-    @if(deletedItems.length > 0)
-    {
-      <div cdkDropList class="list-items" (cdkDropListDropped)="drop($event)" [cdkDropListLockAxis]="'y'">
-        @for (item of deletedItems; track item) {
-          <div class="list-item deleted-item" cdkDrag 
-            [cdkDragData]="item"
-            [id]="'item-'+item.key" 
-            [class.checked]="item.state == ItemState.Completed"
-          >
-            <div class="item-placeholder" *cdkDragPlaceholder></div>
-            @let ctrl = item | pureCall: getCtrl;
-            <input class="name-input" matInput [formControl]="ctrl.controls.name" (keydown)="onItemKeydown(item, $event)"/>
-            <button mat-icon-button (click)="restoreItem(item)">
-              <mat-icon>restore</mat-icon>
-            </button>
-          </div>
-        }
-      </div>
-      
-    }
-  </app-toggler>
+    <hr/>
+    <app-toggler #deletedToggler class="deleted-items" 
+      (toggledChange)="$event ? scrollIntoView(deletedToggler.el) : null"
+      [toggled]="false"
+      [class.sticky]="!deletedToggler.toggled"
+    >
+      <span toggler-label>Deleted items ({{deletedItems.length}})</span>
+      @if(deletedItems.length > 0)
+      {
+        <div cdkDropList class="list-items">
+          @for (item of deletedItems; track item) {
+            <div class="list-item deleted-item" 
+              [id]="'item-'+item.key" 
+              [class.checked]="item.state == ItemState.Completed"
+            >
+              @let ctrl = item | pureCall: getCtrl;
+              <input class="name-input" matInput 
+                [value]="ctrl.value.name"
+                [disabled]="true"
+                (keydown)="onItemKeydown(item, $event)"
+              />
+              <button mat-icon-button (click)="restoreItem(item)">
+                <mat-icon>restore</mat-icon>
+              </button>
+            </div>
+          }
+        </div>
+        
+      }
+    </app-toggler>
+  </div>
 }

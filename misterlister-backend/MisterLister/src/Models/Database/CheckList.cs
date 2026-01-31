@@ -33,9 +33,8 @@ public class CheckList
     public static void ConfigureModel(ModelBuilder mb)
     {
         var b = mb.Entity<CheckList>();
-        b.HasKey(c => c.Key);
-        b.Property(e => e.RowVersion).IsConcurrencyToken();
-        
+        b.Property(e => e.RowVersion)
+            .IsConcurrencyToken();
         b.HasMany(e => e.Items)
             .WithOne(e => e.CheckList)
             .HasForeignKey(e => e.CheckListId)
@@ -93,7 +92,9 @@ public class CheckList
     {
         if(@new.Key != Key)
             throw new ArgumentException("Cannot merge lists with different IDs");
-            
+        
+        // Order items first before filling parent IDs to ensure correct order from DB
+        OrderItems();
         FillParentItemIds();
         @new.FillParentItemIds();
         old.FillParentItemIds();

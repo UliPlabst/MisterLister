@@ -1,13 +1,34 @@
 import { ErrorHandler, inject, Injectable } from "@angular/core";
-import { firstValueFrom } from "rxjs";
 import { API_URI } from "src/global/environment";
-import { InputMasterKeyDialogComponent } from "../components/input-master-key-dialog/input-master-key-dialog.component";
+import { DecryptedList, EncryptedList, isDecryptedList, MaybeDecryptedList } from "../types";
 import { ErrorCode, IApiError, ICheckList, ISaveListDTO } from "../types.api";
-import { importKey } from "../utils";
-import { decryptList, decryptListWithDialog, encryptList } from "../utils/utils.list";
+import { decryptListWithDialog, encryptList } from "../utils/utils.list";
 import { DialogService } from "./dialog.service";
 import { InfoService } from "./info.service";
 import { StorageService } from "./storage.service";
+
+export type SaveDTO = DecryptedSaveDTO | EncryptedSaveDTO;
+export type EncryptedSaveDTO = { new: EncryptedList; old: EncryptedList }
+export type DecryptedSaveDTO = { new: DecryptedList; old: DecryptedList }
+
+export function isDecryptedSaveDTO(dto: SaveDTO): dto is DecryptedSaveDTO
+{
+  if(dto.old == null && dto.new == null)
+    throw new Error("Inconsistent DTO: both new and old lists cannot be null");
+  if(dto.old != null && isDecryptedList(dto.old))
+  {
+    if(dto.new != null && !isDecryptedList(dto.new))
+      throw new Error("Inconsistent DTO: both new and old lists must be either decrypted or encrypted");
+    return true;
+  }
+  else if(dto.new != null && isDecryptedList(dto.new))
+  {
+    if(dto.old != null && !isDecryptedList(dto.old))
+      throw new Error("Inconsistent DTO: both new and old lists must be either decrypted or encrypted");
+    return true;
+  }
+  return false;
+}
 
 @Injectable({
   providedIn: "root"
@@ -27,20 +48,40 @@ export class ApiService
   
   readonly mode = "cors";
   
-  async saveList(id: string, list: ISaveListDTO, forceSave = false, keepalive = false)
+  private async prepareDto(dto: SaveDTO): Promise<ISaveListDTO>
+  {
+    if(isDecryptedSaveDTO(dto))
+    {
+      let key = await this.storage.getKeyOrThrow(dto.new?.key ?? dto.old?.key);
+      return {
+        new: await encryptList(dto.new, dto.old, key),
+        old: await encryptList(dto.old, dto.old, key) //noop decryption
+      };
+    }
+    else
+    {
+      if(isDecryptedList(dto.new) || isDecryptedList(dto.old))
+        throw new Error("Inconsistent DTO: both new and old lists must be either decrypted or encrypted");
+      return dto;
+    }
+  }
+  
+  async saveList(
+    id: string, 
+    dto: SaveDTO,
+    forceSave = false, 
+    keepalive = false
+  )
   {
     let uri = `list/${id}${forceSave ? "?forceSave=true" : ""}`;
-    let key = await this.storage.getKey(id);
-    list.new = list.new == null 
-      ? null 
-      : await encryptList(list.new, key);
+    let saveDto = await this.prepareDto(dto);
       
     let res = await this.request(uri, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(list),
+      body: JSON.stringify(saveDto),
       keepalive: keepalive,
     }) as ICheckList;
     return await decryptListWithDialog(res, {
@@ -49,7 +90,7 @@ export class ApiService
     });
   }
   
-  async getList(id: string)
+  async getList(id: string): Promise<MaybeDecryptedList>
   {
     let res = await this.request(`list/${id}`, {
       method: "GET"
@@ -67,15 +108,12 @@ export class ApiService
     });
   }
   
-  async syncLists(dtos: Record<string, ISaveListDTO>)
+  async syncLists(dtos: Record<string, SaveDTO>)
   {
+    let mappedDtos: Record<string, ISaveListDTO> = {};
     for(let key of Object.keys(dtos))
     {
-      let dto = dtos[key];
-      let listKey = await this.storage.getKey(key);
-      dto.new = dto.new == null 
-        ? null 
-        : await encryptList(dto.new, listKey);
+      mappedDtos[key] = await this.prepareDto(dtos[key]);
     }
     return await this.request(`lists/sync`, {
       method: "POST",

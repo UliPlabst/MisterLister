@@ -22,9 +22,15 @@ export class StorageService
   async getKey(id: string): Promise<CryptoKey>
   {
     let record = await this.db.keys.get(id);
-    if(!record)
-      throw new Error("No encryption key found for list.");
     return record?.key;
+  }
+  
+  async getKeyOrThrow(id: string): Promise<CryptoKey>
+  {
+    let key = await this.getKey(id);
+    if(!key)
+      throw new Error("No encryption key found for list.");
+    return key;
   }
   
   async saveKey(id: string, key: CryptoKey)

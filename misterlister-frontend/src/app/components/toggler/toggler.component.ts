@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, ElementRef, EventEmitter, inject, Input, Output } from '@angular/core';
 import { MatRippleModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -15,4 +15,16 @@ export class TogglerComponent
 { 
   @Input()
   toggled: boolean = false;
+  
+  @Output()
+  toggledChange = new EventEmitter<boolean>();
+  
+  el = inject(ElementRef<HTMLElement>);
+  
+  toggle(isToggled?: boolean)
+  {
+    isToggled ??= !this.toggled;
+    this.toggled = isToggled;
+    this.toggledChange.emit(this.toggled);
+  }
 }

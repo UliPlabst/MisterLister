@@ -1,20 +1,20 @@
 import { CdkDrag, CdkDragDrop, CdkDragHandle, CdkDragPlaceholder, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
-import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewContainerRef } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { combineLatest, debounceTime, distinctUntilChanged, filter, firstValueFrom, fromEvent, map, Subject, take } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, firstValueFrom, fromEvent, map, Subject } from 'rxjs';
+import { ButtonProgressWrapperComponent } from "src/app/components/button-progress-wrapper/button-progress-wrapper.component";
+import { QrCodeDialogComponent } from 'src/app/components/qrcode-dialog/qrcode-dialog.component';
 import { TogglerComponent } from 'src/app/components/toggler/toggler.component';
 import { MaterialModule } from 'src/app/material.module';
+import { IfNullPipe } from 'src/app/pipes/ifNull.pipe';
 import { PureCallPipe } from 'src/app/pipes/pureCall.pipe';
 import { UtilityService } from 'src/app/services/utility.service';
-import { ICheckList, IListItem, ISaveListDTO, ItemState } from 'src/app/types.api';
-import { decrypt, DisposableCollection, encrypt, exportKey, importKey } from 'src/app/utils';
-import { ButtonProgressWrapperComponent } from "src/app/components/button-progress-wrapper/button-progress-wrapper.component";
-import { CommonModule } from '@angular/common';
-import { IfNullPipe } from 'src/app/pipes/ifNull.pipe';
+import { DecryptedList, DecryptedListItem, isDecryptedList } from 'src/app/types';
+import { IListItem, ItemState } from 'src/app/types.api';
+import { DisposableCollection, exportKey, importKey, LambdaDisposable } from 'src/app/utils';
 import { createShareUrl } from 'src/app/utils/utils.list';
-import { QrCodeDialogComponent } from 'src/app/components/qrcode-dialog/qrcode-dialog.component';
-import { CdkPortal, TemplatePortal } from '@angular/cdk/portal';
 
 export type ListComponentQP = {
   showData?: boolean;
@@ -57,10 +57,10 @@ export class ListComponent implements OnInit, OnDestroy
     description: new FormControl<string>(""),
   });
   listDisp = new DisposableCollection();
-  list: ICheckList = null;
-  oldState: ICheckList = null;
-  items: IListItem[] = [];
-  deletedItems: IListItem[] = [];
+  list: DecryptedList = null;
+  oldState: DecryptedList = null;
+  items: DecryptedListItem[] = [];
+  deletedItems: DecryptedListItem[] = [];
   private _dirty = false;
   
   private _changed = new Subject<void>();
@@ -82,6 +82,8 @@ export class ListComponent implements OnInit, OnDestroy
   
   async ngOnInit()
   {
+    this.util.layout.set({ showFooter: false}).addTo(this._disp);
+    
     this.util.layout.setButtons([
       {
         icon: "share",
@@ -142,7 +144,7 @@ export class ListComponent implements OnInit, OnDestroy
           return;
         }
         let list = await this.util.api.getList(id);
-        if(!list)
+        if(!list || !isDecryptedList(list))
         {
           this.util.router.navigate([".."]);
           return;
@@ -159,11 +161,11 @@ export class ListComponent implements OnInit, OnDestroy
             if(await this.util.storage.getKeyValue<boolean>(`masterKeyExported-${this.list.key}`))
               return;
             
-            this.util.info.showMessage(
-              "info",
-              "Backup master key",
-              `Don't forget to backup your list master key! Your master key is stored on your device only and cannot be recovered otherwise. Every list has it's own master key!`
-            );
+            // this.util.info.showMessage(
+            //   "info",
+            //   "Backup master key",
+            //   `Don't forget to backup your list master key! Your master key is stored on your device only and cannot be recovered otherwise. Every list has it's own master key!`
+            // );
           }, 10000)
         }
       });
@@ -215,7 +217,7 @@ export class ListComponent implements OnInit, OnDestroy
       this.save(true);
   }
   
-  setList(list: ICheckList)
+  setList(list: DecryptedList)
   {
     if(this.list)
     {
@@ -250,15 +252,14 @@ export class ListComponent implements OnInit, OnDestroy
   
   async exportMasterKey()
   {
-    let key = await this.util.storage.getKey(this.list.key);
+    let key = await this.util.storage.getKeyOrThrow(this.list.key);
     let masterKey = await exportKey(key);
     navigator.clipboard.writeText(masterKey);
     await this.util.storage.setKeyValue(`masterKeyExported-${this.list.key}`, true);
     this.util.info.showMessage("success", "Master key copied to clipboard.", null, 2000);
   }
   
-  
-  async getSaveDTO(user: string): Promise<ISaveListDTO>
+  async getSaveDTO(user: string): Promise<{ old: DecryptedList, new: DecryptedList }>
   {
     let list = {
       ...this.list,
@@ -279,7 +280,11 @@ export class ListComponent implements OnInit, OnDestroy
       return;
     let dto = await this.getSaveDTO(user);
     console.log("[List]", "Save", this.list);
-    let res = await this.util.api.saveList(this.list.key, dto, forceSave);
+    let res = await this.util.api.saveList(
+      this.list.key, 
+      dto, 
+      forceSave
+    );
     this._dirty = false;
     this.setList(res);
   }
@@ -310,13 +315,22 @@ export class ListComponent implements OnInit, OnDestroy
   
   insertItem(idx: number = null, focus = true)
   {
-    let item: IListItem = {
+    let user = this.util.user$.value;
+    let now = new Date().toISOString();
+    
+    let item: DecryptedListItem = {
       key: this.util.newGuid(),
       name: '',
-      lastModifiedBy: this.util.user$.value,
-      createdBy: this.util.user$.value,
       state: ItemState.Idle,
-      __isNew: true
+      lastModified: now,
+      lastModifiedBy: user,
+      createdAt: now,
+      createdBy: user,
+      completedAt: null,
+      completedBy: now,
+      deletedBy: null,
+      deletedAt: null,
+      __isNew: true,
     };
     this.items.splice(idx, 0, item);
     this.createMapEntry(item);
@@ -325,7 +339,7 @@ export class ListComponent implements OnInit, OnDestroy
       setTimeout(() => this.focusItem(item), 0);
   }
   
-  removeItem(item: IListItem)
+  removeItem(item: DecryptedListItem)
   {
     this.items.remove(item);
     if(!item.__isNew)
@@ -333,10 +347,14 @@ export class ListComponent implements OnInit, OnDestroy
       item.state = ItemState.Deleted;
       this.deletedItems.push(item);
     }
+    if(this.items.length == 0)
+    {
+      this.insertItem(0, true);
+    }
     this._changed.next();
   }
   
-  restoreItem(item: IListItem)
+  restoreItem(item: DecryptedListItem)
   {
     this.deletedItems.remove(item);
     item.state = ItemState.Idle;
@@ -402,7 +420,7 @@ export class ListComponent implements OnInit, OnDestroy
         ?.focus();
   }
   
-  onItemKeydown(item: IListItem, ev: KeyboardEvent)
+  onItemKeydown(item: DecryptedListItem, ev: KeyboardEvent)
   {
     if(ev.key == "Enter")
     {
@@ -483,6 +501,12 @@ export class ListComponent implements OnInit, OnDestroy
           this.focusItem(this.items[idx + 1]);
       }
     }
+  }
+  
+  scrollIntoView(el: ElementRef<HTMLElement>)
+  {
+    this._changeRef.detectChanges();
+    el.nativeElement?.scrollIntoView({behavior: 'smooth', block: 'end'});
   }
 }
 

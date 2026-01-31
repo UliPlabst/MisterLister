@@ -137,8 +137,13 @@ export async function importKey(base64: string)
   );
 }
 
+const ENCRYPTION_ENABLED = true;
+
 export async function decrypt(key: CryptoKey, base64: string)
 {
+  if(!ENCRYPTION_ENABLED)
+    return base64;
+  
   try
   {
     if(String.isNullOrEmpty(base64))
@@ -159,8 +164,11 @@ export async function decrypt(key: CryptoKey, base64: string)
   }
 }
 
+
 export async function encrypt(key: CryptoKey, message: string)
 {
+  if(!ENCRYPTION_ENABLED)
+    return message;
   if(String.isNullOrEmpty(message))
     return null;
   const iv = crypto.getRandomValues(new Uint8Array(12));

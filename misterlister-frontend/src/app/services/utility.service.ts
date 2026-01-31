@@ -72,7 +72,7 @@ export class UtilityService
     if (!String.isNullOrWhitespace(cookies.user) && cookies.user == this.user$.value)
       return cookies.user;
     let d = this.dialog.open(PickUserDialogComponent);
-    let res = await d.afterClosed().toPromise();
+    let res = await d.afterClosed().toPromise() as string;
     if (!res)
       return null;
     

@@ -1,15 +1,17 @@
-import { inject, Injectable, OnDestroy } from "@angular/core";
-import { StorageService } from "./storage.service";
-import { IServiceWorkerOptions } from "src/global/db";
+import { inject, Injectable } from "@angular/core";
 import { BehaviorSubject, fromEvent, skip } from "rxjs";
-import { Disposable, DisposableCollection } from "../utils";
+import { IServiceWorkerOptions } from "src/global/db";
 import { EventBus } from "../misc/EventBus";
+import { DecryptedList } from "../types";
 import { ICheckList } from "../types.api";
+import { Disposable, DisposableCollection } from "../utils";
+import { decryptList } from "../utils/utils.list";
 import { InfoService } from "./info.service";
+import { StorageService } from "./storage.service";
 
 type SwEventMap = {
   listUpdate: {
-    list: ICheckList;
+    list: DecryptedList;
   }
 }
 
@@ -58,10 +60,17 @@ export class SwService extends Disposable
     this._ready$.complete();
     
     fromEvent(navigator.serviceWorker, "message")
-      .subscribe((e: MessageEvent) => {
+      .subscribe(async (e: MessageEvent) => {
         if(e.data?.type == "LIST_SYNC")
         {
-          this.bus.emit("listUpdate", { list: e.data.list });
+          let list = e.data.list as ICheckList;
+          if(!list)
+            return;
+          let key = await this.storage.getKey(list.key);
+          if(!key)
+            return;
+          let decrypted = await decryptList(list, key);
+          this.bus.emit("listUpdate", { list: decrypted });
         }
       })
       .addTo(this._disp);

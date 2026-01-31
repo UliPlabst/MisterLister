@@ -164,15 +164,15 @@ Array.prototype.orderBy = function(arg, comparer) {
   return this;
 };
 
-Array.prototype.orderByStable = function(arg) {
-  this.stableSort((a: any, b: any) => {
-    let _a = arg(a);
-    let _b = arg(b);
-    return _a == _b ? 0 : (_a < _b ? -1 : 1);
-  });
-  return this;
-};
-
+// Array.prototype.orderByStable = function(this: any[], arg) {
+//   this.stableSort((a: any, b: any) => {
+//     let _a = arg(a);
+//     let _b = arg(b);
+//     return _a == _b ? 0 : (_a < _b ? -1 : 1);
+//   });
+//   return this;
+// };
+http://localhost:4200/list/34edadbb-eaca-4d87-b2ad-d601aeaa683e#key=ISjJvu2KknopT8JFEygiq6JLn9N3bW9DBK3K6r+bh2M=
 Array.prototype.remove = function(arg) {
   let res = false;
   if(typeof(arg) == "function")

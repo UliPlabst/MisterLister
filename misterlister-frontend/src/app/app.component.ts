@@ -14,6 +14,7 @@ import { InfoToastsModule } from "./components/toasts/info-toasts.module";
 import { filter, take } from "rxjs";
 import { ISaveListDTO } from "./types.api";
 import { FileInputDirective } from "./directives/file-input.directive";
+import { EncryptedSaveDTO } from "./services/api.service";
 
 @Component({
   selector: 'app-root',
@@ -63,20 +64,20 @@ export class AppComponent implements OnInit, OnDestroy
     {
       if(await this.util.storage.getKeyValue<boolean>("installPromptDismissed"))
         return;
-      setTimeout(async () => {
-        let res = await this.util.dialog.confirm(
-          "Install MisterLister App",
-          [
-            "Did you know that you can install this web app on your device for a better experience?",
-            "Installing this app will allow you to add it to your home screen and increase the storage quota limits to ensure that your data will never be deleted due to storage constraints.",
-            "Installation instructions are different depending on your browser. Look for a button named 'Add to home screen' or 'Install app' in the context menu.",
-          ],
-          "Got it, don't show again",
-          "Ok"
-        );
-        if(res === true)
-          await this.util.storage.setKeyValue("installPromptDismissed", true);
-      }, 30000)
+      // setTimeout(async () => {
+      //   let res = await this.util.dialog.confirm(
+      //     "Install MisterLister App",
+      //     [
+      //       "Did you know that you can install this web app on your device for a better experience?",
+      //       "Installing this app will allow you to add it to your home screen and increase the storage quota limits to ensure that your data will never be deleted due to storage constraints.",
+      //       "Installation instructions are different depending on your browser. Look for a button named 'Add to home screen' or 'Install app' in the context menu.",
+      //     ],
+      //     "Got it, don't show again",
+      //     "Ok"
+      //   );
+      //   if(res === true)
+      //     await this.util.storage.setKeyValue("installPromptDismissed", true);
+      // }, 30000)
     }
   }
   
@@ -90,12 +91,12 @@ export class AppComponent implements OnInit, OnDestroy
     let lists = await this.util.storage.db.lists.toArray();
     if(this.util.user$.value == null || lists.length == 0)
       return;
-    let dtos: Record<string, ISaveListDTO> = {};
+    let dtos: Record<string, EncryptedSaveDTO> = {};
     for(let l of lists)
     {
-      let res: ISaveListDTO = {
-        new: l.new,
-        old: l.old,
+      let res: EncryptedSaveDTO = {
+        new: l.new != null ? { ...l.new, isEncrypted: true } : null,
+        old: l.old != null ? { ...l.old, isEncrypted: true } : null,
       };
       dtos[l.id] = res;
     }

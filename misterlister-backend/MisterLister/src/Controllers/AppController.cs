@@ -45,12 +45,12 @@ public class ApiController(
         var existing = await _db.CheckLists
             .Include(e => e.Items)
             .FirstOrDefaultAsync(e => e.Key == id);
-        var result = SaveList(dto, existing);
+        var result = UpdateList(dto, existing);
         await _db.SaveChangesAsync();
         return result;
     }
     
-    private CheckList SaveList(SaveListDTO dto, CheckList? existing)
+    private CheckList UpdateList(SaveListDTO dto, CheckList? existing)
     {
         var @new = dto.New;
         var old = dto.Old;
@@ -102,7 +102,7 @@ public class ApiController(
             .ToDictionaryAsync(e => e.Key, e => e);
         var res = dtos.ToDictionary(
             pair => pair.Key,
-            pair => SaveList(pair.Value, existingLists.GetValueOrDefault(pair.Key))
+            pair => UpdateList(pair.Value, existingLists.GetValueOrDefault(pair.Key))
         );
         await _db.SaveChangesAsync();
         return res;

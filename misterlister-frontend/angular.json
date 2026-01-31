@@ -89,7 +89,10 @@
               "buildTarget": "misterlister-frontend:build:production"
             },
             "development": {
-              "buildTarget": "misterlister-frontend:build:development"
+              "buildTarget": "misterlister-frontend:build:development",
+              "allowedHosts": [
+                ".ngrok-free.app"
+              ]
             }
           },
           "defaultConfiguration": "development"

@@ -3,12 +3,12 @@ export interface ICheckList {
   name: string;
   description: string;
   items: IListItem[];
-  createdBy?: string;
-  created?: string;
-  lastModified?: string;
-  lastModifiedBy?: string;
-  deleted?: string;
-  deletedBy?: string;
+  createdBy: string;
+  created: string;
+  lastModified: string;
+  lastModifiedBy: string;
+  deleted: string;
+  deletedBy: string;
   encryptedKey: string;
 }
 
@@ -16,14 +16,14 @@ export interface IListItem {
   key: string;
   name: string;
   state: ItemState;
-  completedAt?: string;
-  completedBy?: string;
-  lastModified?: string;
+  completedAt: string;
+  completedBy: string;
+  lastModified: string;
   lastModifiedBy: string;
-  createdAt?: string;
+  createdAt: string;
   createdBy: string;
-  deletedAt?: string;
-  deletedBy?: string;
+  deletedAt: string;
+  deletedBy: string;
   __isNew?: boolean;
 }
 

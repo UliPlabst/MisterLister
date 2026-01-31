@@ -10,6 +10,7 @@ import { createKey, DisposableCollection, download, encrypt, exportKey, importKe
 import { decryptList } from 'src/app/utils/utils.list';
 import { ListComponentQP } from '../list/list.component';
 import { FileInputChangedEvent, FileInputDirective } from "src/app/directives/file-input.directive";
+import { DecryptedList } from 'src/app/types';
 
 @Component({
   selector: 'app-home',
@@ -59,7 +60,7 @@ export class HomeComponent implements OnInit, OnDestroy
       lists.map(async l => {
         try
         {
-          l = await decryptList(l, await this.util.storage.getKey(l.key));
+          l = await decryptList(l, await this.util.storage.getKeyOrThrow(l.key));
         }
         catch(err)
         {
@@ -81,25 +82,33 @@ export class HomeComponent implements OnInit, OnDestroy
       return;
     }
     
-    await this.util.ensureUser();
+    let user = await this.util.ensureUser();
     let masterKey = await createKey();
     let listEncryptionKey = await createKey();
     let encryptedKey = await encrypt(
       masterKey,
       await exportKey(listEncryptionKey)
     );
-    
-    let list: ICheckList = {
+    let now = new Date().toISOString();
+    let list: DecryptedList = {
       name: this.nameCtrl.value,
       description: null,
       items: [],
       key: this.util.newGuid(),
-      encryptedKey
+      encryptedKey,
+      createdBy: user,
+      created: now,
+      lastModified: now,
+      lastModifiedBy: user,
+      deleted: null,
+      deletedBy: user,
+      isEncrypted: false,
     };
     await this.util.storage.saveKey(list.key, masterKey);
     
     let res = await this.util.api.saveList(list.key, {
       new: list,
+      old: null
     });
     if(!res)
       return;
@@ -170,10 +179,18 @@ export class HomeComponent implements OnInit, OnDestroy
         let existing = await this.util.storage.getKey(id);
         if(existing) //prevent override
           continue;
-        
+          
         let key = await importKey(obj[id]);
         await this.util.storage.saveKey(id, key);
+        await this.util.api.getList(id);
       } 
+      
+      await this.updateLists();
+      this.util.info.showMessage(
+        "success",
+        "Master keys imported.",
+        "The master keys have been successfully imported."
+      );
     }
     finally
     {

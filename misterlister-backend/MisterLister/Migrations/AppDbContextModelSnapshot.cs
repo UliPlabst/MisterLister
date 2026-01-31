@@ -19,9 +19,9 @@ namespace MisterLister.Migrations
 
             modelBuilder.Entity("MisterLister.Models.Database.CheckList", b =>
                 {
-                    b.Property<Guid>("Key")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("TEXT");
@@ -41,8 +41,8 @@ namespace MisterLister.Migrations
                     b.Property<string>("EncryptedKey")
                         .HasColumnType("TEXT");
 
-                    b.Property<long>("Id")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid>("Key")
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("LastModified")
                         .HasColumnType("TEXT");
@@ -57,7 +57,7 @@ namespace MisterLister.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("Key");
+                    b.HasKey("Id");
 
                     b.HasIndex("Key")
                         .IsUnique();
@@ -125,7 +125,6 @@ namespace MisterLister.Migrations
                     b.HasOne("MisterLister.Models.Database.CheckList", "CheckList")
                         .WithMany("Items")
                         .HasForeignKey("CheckListId")
-                        .HasPrincipalKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
